@@ -5,7 +5,10 @@
     "Headline": {
         "headlineTitle": "Get a sense for angles"
     },
-    "Home": {
+    "Index": {
         "htmlTitle": "Study Angles Web Site"
+    },
+    "Navigation": {
+        "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
     }
 }

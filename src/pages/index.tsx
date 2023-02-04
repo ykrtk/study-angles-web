@@ -1,4 +1,4 @@
-import styles from '@/styles/Home.module.scss'
+import styles from '@/styles/Index.module.scss'
 import { Inter } from '@next/font/google'
 import { GetStaticPropsContext } from 'next'
 import { useTranslations } from 'next-intl'
@@ -6,11 +6,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
-  const t = useTranslations('Home');
+export default function Index() {
+  const t = useTranslations('Index');
+  const { locale } = useRouter();
 
   return (
     <>
@@ -21,9 +23,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-
         <Headline />
-        
       </main>
       <Footer />
     </>

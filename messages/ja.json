@@ -5,7 +5,10 @@
     "Headline": {
         "headlineTitle": "角度の感覚を身につけよう！"
     },
-    "Home": {
+    "Index": {
         "htmlTitle": "角度を学ぼう"
+    },
+    "Navigation": {
+        "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
     }
 }
