@@ -6,6 +6,7 @@
         "headlineTitle": "角度の感覚を身につけよう！"
     },
     "Index": {
+        "fontFamily": "'游ゴシック体', 'Yu Gothic Medium', YuGothicM, '游ゴシック Medium', YuGothic, 'Yu Gothic', '游ゴシック', 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif",
         "htmlTitle": "角度を学ぼう"
     },
     "Navigation": {
