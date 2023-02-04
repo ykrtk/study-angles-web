@@ -41,6 +41,18 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+body:before {
+  content: "";
+  width: 22px;
+  height: 100%;
+  background-color: steelblue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  z-index: 100;
+}
+
 a {
   color: inherit;
   text-decoration: none;
