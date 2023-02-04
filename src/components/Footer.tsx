@@ -1,4 +1,4 @@
-import styles from '@/styles/Footer.module.css'
+import styles from '@/styles/Footer.module.scss'
 import { Inter } from '@next/font/google'
 import { useTranslations } from 'next-intl'
 

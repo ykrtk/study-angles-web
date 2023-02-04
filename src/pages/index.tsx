@@ -1,4 +1,4 @@
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/Home.module.scss'
 import { Inter } from '@next/font/google'
 import { GetStaticPropsContext } from 'next'
 import { useTranslations } from 'next-intl'
