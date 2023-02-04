@@ -39,4 +39,3 @@ next-env.d.ts
 # yarn
 .yarn/*
 .yarn/install-state.gz
-public/favicon_next.ico
