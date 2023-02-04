@@ -1,5 +1,11 @@
 {
+    "Footer": {
+        "providedBy": "Developed by ykrtk"
+    },
+    "Headline": {
+        "headlineTitle": "Test"
+    },
     "Home": {
-        "headTitle": "Study Angles Web Site"
+        "htmlTitle": "Study Angles Web Site"
     }
 }
