@@ -1,12 +1,19 @@
 h1.title {
     font-size: xxx-large;
     font-weight: bold;
+    padding: 1rem;
+    text-align: center;
+
+    @media (max-width: 700px) {
+        font-size: xx-large;
+    }
 }
 
-.center {
+.header {
     display: flex;
+    text-align: center;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 2rem 0;
+    padding: 1rem;
 }

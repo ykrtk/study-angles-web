@@ -1,19 +1,20 @@
 import styles from '@/styles/Headline.module.scss'
-import { Inter } from '@next/font/google'
 import { useTranslations } from 'next-intl'
 import { Navigation } from './Navigation'
 
-const inter = Inter({ subsets: ['latin'] })
+type HeadlineProps = {
+  fontFamily: string
+};
 
-export function Headline() {
+export function Headline(props: HeadlineProps) {
   const t = useTranslations('Headline');
 
   return (
-    <>
+    <header>
       <Navigation />
-      <div className={styles.center}>
+      <hgroup className={styles.header} style={{"fontFamily" : props.fontFamily}}>
           <h1 className={styles.title}>{t('headlineTitle')}</h1>
-      </div>
-    </>
+      </hgroup>
+    </header>
   );
 }
