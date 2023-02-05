@@ -1,8 +1,5 @@
 import styles from '@/styles/Footer.module.scss'
-import { Inter } from '@next/font/google'
 import { useTranslations } from 'next-intl'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export function Footer() {
   const t = useTranslations('Footer');
