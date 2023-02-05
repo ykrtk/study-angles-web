@@ -6,7 +6,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
-import { useRouter } from 'next/router'
+import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,18 +15,28 @@ export default function Index() {
   const fontFamily = t('fontFamily');
 
   return (
-    <>
+    <div className={styles.content}>
       <Head>
         <title>{t('htmlTitle')}</title>
         <meta name="description" content="Study angles web site" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Headline fontFamily={fontFamily} />
+      <hr />
       <main className={styles.main} style={{"fontFamily" : fontFamily}}>
-        <Headline />
+        <section className={styles.playgroundcontainer}>
+          <div className={styles.playgroundcanvas}>
+            <PlayGroundCanvas></PlayGroundCanvas>
+          </div>
+          <div className={styles.playgrounddesc}>
+            <h2>{t('playGroundSectionTitle')}</h2>
+          </div>
+        </section>
       </main>
+      <hr />
       <Footer />
-    </>
+    </div>
   )
 }
 
