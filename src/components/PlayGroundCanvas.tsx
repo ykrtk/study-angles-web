@@ -96,7 +96,6 @@ export function PlayGroundCanvas() {
     const handleNativeMouseMoveRef = useRef<(e: MouseEvent) => void>(null) as MutableRefObject<(e: MouseEvent) => void>;
 
     const drawInitialState = (
-        // canvasRef: RefObject<HTMLCanvasElement>, 
         canvasContext: CanvasRenderingContext2D, 
         canvasDimension: Dimension): Circle => {
 
@@ -121,6 +120,9 @@ export function PlayGroundCanvas() {
 
         if (handlerCircle.contains(coordsInCanvas)) {
             draggingRef.current = true;
+            // We need to use useRef to keep the reference to the handleNativeMouseMove event handler,
+            // because in order to get removeEventListener in handleMouseUp() to work as expected, 
+            // we need the idential instance of it which was used for addEventListener
             handleNativeMouseMoveRef.current = handleNativeMouseMove;
             canvasRef.current?.addEventListener('mousemove', handleNativeMouseMoveRef.current);
         }
