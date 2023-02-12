@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
 import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
+import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,7 +28,8 @@ export default function Index() {
       <main className={styles.main} style={{"fontFamily" : fontFamily}}>
         <section className={styles.playgroundcontainer}>
           <div className={styles.playgroundcanvas}>
-            <PlayGroundCanvas></PlayGroundCanvas>
+            <PlayGroundAngleIndicator />
+            <PlayGroundCanvas />
           </div>
           <div className={styles.playgrounddesc}>
             <h2>{t('playGroundSectionTitle')}</h2>

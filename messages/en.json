@@ -13,6 +13,9 @@
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
     },
+    "PlayGroundAngleIndicator": {
+        "currentAngleDegree": "Current angle of the colored area is <important>{degree}</important> degrees"
+    },
     "PlayGroundCanvas": {
         "canvasNotSupported": "Your browser does not seem to support HTML5 canvas. Please use browser with HTML5 canvas support."
     }
