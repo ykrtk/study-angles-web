@@ -1,5 +1,5 @@
 import styles from '@/styles/PlayGroundCanvas.module.scss'
-import { DEGREE_TO_RADIAN, Circle, Dimension, getContainerCoords, Point } from '@/utils/Drawing';
+import { DEGREE_TO_RADIAN, Circle, Dimension, Point, getAngleInRadian, getContainerCoords, getAngleInDegreeForUI, getCenter } from '@/utils/Drawing';
 import { useTranslations } from 'next-intl'
 import { MutableRefObject, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -8,9 +8,64 @@ const DEFAULT_CANVAS_WIDTH = 500;
 const DEFAULT_CANVAS_HEIGHT = 500;
 const CANVAS_CIRCLE_MARGIN = 30;
 const HANDLER_CIRCLE_RADIUS = 20;
+const ANGLE_MARKER_WIDTH_FACTOR = 0.23
 
-const INITIAL_DRAWINGS_COLOR = 'darkgray'
 const DEFAULT_LINE_WIDTH = 3
+const DEFAULT_DRAWINGS_COLOR = 'darkgray'
+//const DEFAULT_DRAWINGS_COLOR = '#837E7C' // 'granite'
+const RIGHT_ANGLE_STROKE_COLOR = 'red'
+const RIGHT_ANGLE_STROKE_WIDTH = 6
+const SELECTED_SECTOR_FILL_COLOR = 'pink'
+
+const decorateDiameter = (
+    canvasContext: CanvasRenderingContext2D,
+    bigCircleCenter: Point,
+    handlerCircleCenter: Point): void => {
+    
+    const ctx = canvasContext;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
+    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
+
+    const radius = Math.abs(handlerCircleCenter.x - bigCircleCenter.x);
+    ctx.beginPath();
+    ctx.moveTo(bigCircleCenter.x - radius, bigCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x + radius, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+const decorateRightAngle = (
+    canvasContext: CanvasRenderingContext2D,
+    bigCircleCenter: Point,
+    handlerCircleCenter: Point): void => {
+    
+    const ctx = canvasContext;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
+    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
+
+    ctx.beginPath();
+    ctx.moveTo(handlerCircleCenter.x, handlerCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+
+    const radius = Math.abs(handlerCircleCenter.y - bigCircleCenter.y);
+    const rightAngleMarkerX = bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR);
+    const rightAngleMarkerY = ((handlerCircleCenter.y < bigCircleCenter.y) 
+                                ? (bigCircleCenter.y - (radius * ANGLE_MARKER_WIDTH_FACTOR))
+                                : (bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR)));
+    ctx.beginPath();
+    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
+    ctx.lineTo(rightAngleMarkerX, bigCircleCenter.y);
+    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
+    ctx.lineTo(bigCircleCenter.x, rightAngleMarkerY);
+    ctx.moveTo((bigCircleCenter.x + radius), bigCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+}
 
 const drawBackground = (
     // canvasRef: RefObject<HTMLCanvasElement>, 
@@ -30,12 +85,12 @@ const drawBackground = (
 
     const bigCircleCenter = getCenter(canvasWidth, canvasHeight);
     const radius = getCircleRadius(canvasWidth, canvasHeight);
-    const bigCircle = new Circle(bigCircleCenter, radius, DEFAULT_LINE_WIDTH, INITIAL_DRAWINGS_COLOR);
+    const bigCircle = new Circle(bigCircleCenter, radius, DEFAULT_LINE_WIDTH, DEFAULT_DRAWINGS_COLOR);
     bigCircle.drawOnCanvas(ctx);
 
     const handlerCircleCenter = {x: bigCircleCenter.x + radius, y: bigCircleCenter.y};
     ctx.lineWidth = DEFAULT_LINE_WIDTH;
-    ctx.strokeStyle = INITIAL_DRAWINGS_COLOR;
+    ctx.strokeStyle = DEFAULT_DRAWINGS_COLOR;
 
     // Draw the line between center and the starting point
     ctx.beginPath();
@@ -44,9 +99,22 @@ const drawBackground = (
     ctx.stroke();
     ctx.closePath();
 
+    // Draw the guide curve arrow
+    const curveArrowStartAngle = (-1 * 10 * DEGREE_TO_RADIAN);
+    const curveArrowEndAngle = (-1 * 40 * DEGREE_TO_RADIAN);
+    const curveArrowDistance = (radius * 1.11);
+    const guideArrowEdge = { x: (bigCircleCenter.x + curveArrowDistance * Math.cos(curveArrowEndAngle)), 
+                            y: (bigCircleCenter.y + curveArrowDistance * Math.sin(curveArrowEndAngle)) };
+    
     ctx.beginPath();
-    ctx.arc(bigCircleCenter.x, bigCircleCenter.y, (radius * 1.11), -1 * 10 * DEGREE_TO_RADIAN, -1 * 40 * DEGREE_TO_RADIAN, true);
-    canvasContext.stroke();
+    ctx.arc(bigCircleCenter.x, bigCircleCenter.y, curveArrowDistance, curveArrowStartAngle, curveArrowEndAngle, true);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(guideArrowEdge.x, guideArrowEdge.y);
+    ctx.lineTo((guideArrowEdge.x + 50), (guideArrowEdge.y + 25));
+    ctx.stroke();
     ctx.closePath();
 
     return handlerCircleCenter;
@@ -67,17 +135,7 @@ const getCanvasContext = (canvasRef: RefObject<HTMLCanvasElement>): CanvasRender
     return context;
 }
 
-const getCenter = (width: number | undefined | null, height: number | undefined | null): Point => {
-    width = width ?? 0;
-    height = height ?? 0;
-
-    return {
-        x: Math.floor(width / 2),
-        y: Math.floor(height / 2)
-    };
-}
-
-const getCircleRadius = (canvasWidth: number, canvasHeight: number): number => {
+export const getCircleRadius = (canvasWidth: number, canvasHeight: number): number => {
     const shorterSide = Math.min(canvasWidth, canvasHeight);
     const circleContainerSide = shorterSide - (CANVAS_CIRCLE_MARGIN * 2);
     return Math.floor(circleContainerSide / 2); 
@@ -102,21 +160,21 @@ export function PlayGroundCanvas() {
         const handlerCircleCenter = drawBackground(canvasContext, canvasDimension, false);
         // Draw the handler circle
         const handlerCircle = new Circle(handlerCircleCenter, HANDLER_CIRCLE_RADIUS, DEFAULT_LINE_WIDTH, 
-                                            INITIAL_DRAWINGS_COLOR, INITIAL_DRAWINGS_COLOR, true);
+                                            DEFAULT_DRAWINGS_COLOR, DEFAULT_DRAWINGS_COLOR, true);
         handlerCircle.drawOnCanvas(canvasContext);
         return handlerCircle;
     }
 
     const handleMouseDown = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        console.log('mousedown');
+        // console.log('mousedown');
         if (!initialized || !handlerCircle) {
             console.log('Not properly initialized');
             return;
         }
 
         const coordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
-        console.log(`inCanvas: ${coordsInCanvas.x}, ${coordsInCanvas.y}`);
-        console.log(`handlerCenter: ${handlerCircle?.centerPoint?.x}, ${handlerCircle?.centerPoint?.y}`);
+        // console.log(`inCanvas: ${coordsInCanvas.x}, ${coordsInCanvas.y}`);
+        // console.log(`handlerCenter: ${handlerCircle?.centerPoint?.x}, ${handlerCircle?.centerPoint?.y}`);
 
         if (handlerCircle.contains(coordsInCanvas)) {
             draggingRef.current = true;
@@ -129,22 +187,24 @@ export function PlayGroundCanvas() {
     }, [initialized, handlerCircle])
 
     const handleMouseUp = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        console.log('mouseup');
+        // console.log('mouseup');
         draggingRef.current = false;
         canvasRef.current?.removeEventListener('mousemove', handleNativeMouseMoveRef.current);
     }, [])
 
     const handleNativeMouseMove = useCallback((e : MouseEvent) => {
-        console.log('mousemove');
+        // console.log('mousemove');
         if (!draggingRef.current) {
             return;
         }
 
         const xyCoordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
-        console.log(`coordsInCanvas: ${xyCoordsInCanvas.x}, ${xyCoordsInCanvas.y}`);
+        // console.log(`coordsInCanvas: ${xyCoordsInCanvas.x}, ${xyCoordsInCanvas.y}`);
         if (!canvasContext) {
             throw new Error('Canvas context is not ready.');
         }
+        const ctx = canvasContext;
+
         drawBackground(canvasContext, canvasDimension!, true);
         const canvasCenter = getCenter(canvasDimension!.width, canvasDimension!.height);
         const radius = getCircleRadius(canvasDimension!.width, canvasDimension!.height);
@@ -152,25 +212,57 @@ export function PlayGroundCanvas() {
         // In the coordinate system where the canvasCenter is (0, 0)
         const adjustedWithCenter = {x: xyCoordsInCanvas.x - canvasCenter.x, y: xyCoordsInCanvas.y - canvasCenter.y};
         const distanceFromCenter = Math.sqrt(Math.pow(adjustedWithCenter.x, 2) + Math.pow(adjustedWithCenter.y, 2));
-        const cosine = adjustedWithCenter.x / distanceFromCenter;
-        const sine = adjustedWithCenter.y / distanceFromCenter;
-        const pointOnArc = { x: radius * cosine, y: radius * sine } as Point;
+        const cosineValue = adjustedWithCenter.x / distanceFromCenter;
+        const sineValue = adjustedWithCenter.y / distanceFromCenter;
+        const pointOnArc = { x: radius * cosineValue, y: radius * sineValue } as Point;
 
         // Convert to the actual Canvas coordinates
         const pointOnArcInXY = { x: pointOnArc.x + canvasCenter.x, y: pointOnArc.y + canvasCenter.y } as Point;
         
-        // Draw the handler circle
+        // Draw the handler circle on the arc of the center circle
         const handlerCircle = new Circle(pointOnArcInXY, HANDLER_CIRCLE_RADIUS, DEFAULT_LINE_WIDTH, 
-                                            INITIAL_DRAWINGS_COLOR, INITIAL_DRAWINGS_COLOR, true);
-        handlerCircle.drawOnCanvas(canvasContext);
+                                            DEFAULT_DRAWINGS_COLOR, DEFAULT_DRAWINGS_COLOR, true);
+        handlerCircle.drawOnCanvas(ctx);
         setHandlerCircle(handlerCircle);
         
-        // Draw the line between center and the starting point
-        canvasContext.beginPath();
-        canvasContext.moveTo(pointOnArcInXY.x, pointOnArcInXY.y);
-        canvasContext.lineTo(canvasCenter.x, canvasCenter.y);
-        canvasContext.stroke();
-        canvasContext.closePath();
+        // Draw the line between center and the handler circle
+        ctx.beginPath();
+        ctx.moveTo(pointOnArcInXY.x, pointOnArcInXY.y);
+        ctx.lineTo(canvasCenter.x, canvasCenter.y);
+        ctx.strokeStyle = DEFAULT_DRAWINGS_COLOR;
+        ctx.lineWidth = DEFAULT_LINE_WIDTH;
+        ctx.stroke();
+        ctx.closePath();
+
+        const angleInRadian = getAngleInRadian(cosineValue, sineValue, true);
+        const angleInDegreeForUI = getAngleInDegreeForUI(angleInRadian);
+
+
+        if (angleInDegreeForUI == 180) {
+            decorateDiameter(ctx, canvasCenter, pointOnArcInXY);
+        }
+        else if (angleInDegreeForUI == 90 || angleInDegreeForUI == 270) {
+            decorateRightAngle(ctx, canvasCenter, pointOnArcInXY);
+        } else {
+            ctx.globalCompositeOperation = "source-over";
+            ctx.beginPath();
+            ctx.strokeStyle = DEFAULT_DRAWINGS_COLOR;
+            ctx.lineWidth = DEFAULT_LINE_WIDTH;
+            ctx.arc(canvasCenter.x, canvasCenter.y, (radius * ANGLE_MARKER_WIDTH_FACTOR), 0, angleInRadian, true);
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        ctx.globalCompositeOperation = "destination-over";        
+        ctx.beginPath();
+        ctx.moveTo(canvasCenter.x, canvasCenter.y);
+        ctx.fillStyle = SELECTED_SECTOR_FILL_COLOR;
+        ctx.arc(canvasCenter.x, canvasCenter.y, radius, 0, getAngleInRadian(cosineValue, sineValue, true), true);
+        ctx.closePath();
+        ctx.fill();
+
+
+        console.log(`Angle is ${angleInDegreeForUI} degree`)
     }, [canvasContext, canvasDimension])
 
     // Calculate appropriate canvas size based on browser viewport
@@ -206,22 +298,12 @@ export function PlayGroundCanvas() {
 
     useEffect(() => {
         if (initialized)
-        {
-            // TODO: Delete
-            if (canvasRef.current != null) {
-                const canvasTop = canvasRef.current.clientTop;
-                const canvasLeft = canvasRef.current.clientLeft;
-                const canvasTop2 = canvasRef.current.offsetTop;
-                const canvasLeft2 = canvasRef.current.offsetLeft;
-                const canvasBRect = canvasRef.current.getBoundingClientRect();
+        {}
 
-                const centerPoint = getCenter(canvasDimension?.width, canvasDimension?.height);
-    
-                const pointDebug = { originalCenterX: centerPoint.x, originalCenterY: centerPoint.y, 
-                    canvasTop: canvasTop, canvasLeft: canvasLeft, canvasTop2: canvasTop2, canvasLeft2: canvasLeft2, bRectTop: canvasBRect.top, bRectLeft: canvasBRect.left };
-                console.log(pointDebug);    
-            }
-        }
+        // return () => {
+        //     drawInitialState(canvasContext!, 
+        //         (canvasDimension ?? { width: DEFAULT_CANVAS_WIDTH, height: DEFAULT_CANVAS_HEIGHT }));
+        // };
     }, [canvasDimension, initialized] )
 
   return (

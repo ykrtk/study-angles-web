@@ -36,7 +36,7 @@ export class Circle {
     clearOnCanvas(canvasContext: CanvasRenderingContext2D) {
         if (canvasContext != null) {
             canvasContext.globalCompositeOperation = "destination-out";
-
+            
             canvasContext.beginPath();
             canvasContext.arc(this.centerPoint.x, this.centerPoint.y, this.radius, 0, Math.PI * 2, false);
             canvasContext.fill();
@@ -57,9 +57,37 @@ export class Circle {
                 canvasContext.fillStyle = this.fillStyle;
                 canvasContext.fill();
             }
-            canvasContext.closePath();
+            canvasContext.closePath();            
         }
     }
+}
+
+export const getAngleInDegreeForUI = (angleInRadian: number) : number => {
+    return Math.round(360 - (angleInRadian / DEGREE_TO_RADIAN));
+}
+
+export const getAngleInRadian = (cosineValue: number, sineValue: number, counterClockWise: boolean) : number => {        
+    if (!counterClockWise) {
+        throw new Error('counterClockWise = false is not implemented!');
+    }
+    
+    if (sineValue < 0) {
+        // The left-top area (the second quadrant) and the right-top area (the first quadrant)
+        return (2 * Math.PI) - Math.acos(cosineValue);
+    } else {
+        // The left-bottom area (the third quadrant) and the right-bottom area (the fourth quadrant)
+        return Math.acos(cosineValue);
+    }
+}
+
+export const getCenter = (width: number | undefined | null, height: number | undefined | null): Point => {
+    width = width ?? 0;
+    height = height ?? 0;
+
+    return {
+        x: Math.floor(width / 2),
+        y: Math.floor(height / 2)
+    };
 }
 
 export const getContainerCoords = (clientCoords: Point, containerRect: DOMRect): Point => {
