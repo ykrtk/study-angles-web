@@ -1,3 +1,5 @@
+export const DEGREE_TO_RADIAN : number = (Math.PI / 180);
+
 export type Point = {
     x: number,
     y: number

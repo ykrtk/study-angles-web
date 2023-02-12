@@ -1,5 +1,5 @@
 import styles from '@/styles/PlayGroundCanvas.module.scss'
-import { Circle, Dimension, getContainerCoords, Point } from '@/utils/Drawing';
+import { DEGREE_TO_RADIAN, Circle, Dimension, getContainerCoords, Point } from '@/utils/Drawing';
 import { useTranslations } from 'next-intl'
 import { MutableRefObject, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -45,7 +45,7 @@ const drawBackground = (
     ctx.closePath();
 
     ctx.beginPath();
-    ctx.arc(bigCircleCenter.x, bigCircleCenter.y, (radius * 1.11), (Math.PI * 2 * 0.97), (Math.PI * 2 * 0.9), true);
+    ctx.arc(bigCircleCenter.x, bigCircleCenter.y, (radius * 1.11), -1 * 10 * DEGREE_TO_RADIAN, -1 * 40 * DEGREE_TO_RADIAN, true);
     canvasContext.stroke();
     ctx.closePath();
 
@@ -140,25 +140,34 @@ export function PlayGroundCanvas() {
             return;
         }
 
-        const coordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
-        console.log(`coordsInCanvas: ${coordsInCanvas.x}, ${coordsInCanvas.y}`);
-
+        const xyCoordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
+        console.log(`coordsInCanvas: ${xyCoordsInCanvas.x}, ${xyCoordsInCanvas.y}`);
         if (!canvasContext) {
             throw new Error('Canvas context is not ready.');
         }
         drawBackground(canvasContext, canvasDimension!, true);
+        const canvasCenter = getCenter(canvasDimension!.width, canvasDimension!.height);
+        const radius = getCircleRadius(canvasDimension!.width, canvasDimension!.height);
 
+        // In the coordinate system where the canvasCenter is (0, 0)
+        const adjustedWithCenter = {x: xyCoordsInCanvas.x - canvasCenter.x, y: xyCoordsInCanvas.y - canvasCenter.y};
+        const distanceFromCenter = Math.sqrt(Math.pow(adjustedWithCenter.x, 2) + Math.pow(adjustedWithCenter.y, 2));
+        const cosine = adjustedWithCenter.x / distanceFromCenter;
+        const sine = adjustedWithCenter.y / distanceFromCenter;
+        const pointOnArc = { x: radius * cosine, y: radius * sine } as Point;
+
+        // Convert to the actual Canvas coordinates
+        const pointOnArcInXY = { x: pointOnArc.x + canvasCenter.x, y: pointOnArc.y + canvasCenter.y } as Point;
+        
         // Draw the handler circle
-        const handlerCircle = new Circle(coordsInCanvas, HANDLER_CIRCLE_RADIUS, DEFAULT_LINE_WIDTH, 
+        const handlerCircle = new Circle(pointOnArcInXY, HANDLER_CIRCLE_RADIUS, DEFAULT_LINE_WIDTH, 
                                             INITIAL_DRAWINGS_COLOR, INITIAL_DRAWINGS_COLOR, true);
         handlerCircle.drawOnCanvas(canvasContext);
         setHandlerCircle(handlerCircle);
         
-        const canvasCenter = getCenter(canvasDimension!.width, canvasDimension!.height);
-
         // Draw the line between center and the starting point
         canvasContext.beginPath();
-        canvasContext.moveTo(coordsInCanvas.x, coordsInCanvas.y);
+        canvasContext.moveTo(pointOnArcInXY.x, pointOnArcInXY.y);
         canvasContext.lineTo(canvasCenter.x, canvasCenter.y);
         canvasContext.stroke();
         canvasContext.closePath();
