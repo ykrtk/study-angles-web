@@ -1,12 +1,12 @@
 import styles from '@/styles/PlayGroundCanvas.module.scss'
-import { DEGREE_TO_RADIAN, Circle, Dimension, Point, getAngleInRadian, getContainerCoords, getAngleInDegreeForUI, getCenter } from '@/utils/Drawing';
+import { DEGREE_TO_RADIAN, Circle, Dimension, Point, getAngleInRadian, getContainerCoords, getAngleInDegreeForUI, getCenter, getCircleRadius } from '@/utils/Drawing';
 import { useTranslations } from 'next-intl'
 import { MutableRefObject, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 const CANVAS_ELEMENT_ID = 'playGroundCanvas';
 const DEFAULT_CANVAS_WIDTH = 500;
 const DEFAULT_CANVAS_HEIGHT = 500;
-const CANVAS_CIRCLE_MARGIN = 30;
+const CANVAS_CIRCLE_MARGIN = 40;
 const HANDLER_CIRCLE_RADIUS = 20;
 const ANGLE_MARKER_WIDTH_FACTOR = 0.23
 
@@ -17,7 +17,7 @@ const RIGHT_ANGLE_STROKE_COLOR = 'red'
 const RIGHT_ANGLE_STROKE_WIDTH = 6
 const SELECTED_SECTOR_FILL_COLOR = 'pink'
 
-const decorateDiameter = (
+const highlightDiameter = (
     canvasContext: CanvasRenderingContext2D,
     bigCircleCenter: Point,
     handlerCircleCenter: Point): void => {
@@ -35,7 +35,7 @@ const decorateDiameter = (
     ctx.closePath();
 }
 
-const decorateRightAngle = (
+const highlightRightAngle = (
     canvasContext: CanvasRenderingContext2D,
     bigCircleCenter: Point,
     handlerCircleCenter: Point): void => {
@@ -68,7 +68,6 @@ const decorateRightAngle = (
 }
 
 const drawBackground = (
-    // canvasRef: RefObject<HTMLCanvasElement>, 
     canvasContext: CanvasRenderingContext2D, 
     canvasDimension: Dimension, 
     clear: boolean = false): Point => {
@@ -84,7 +83,7 @@ const drawBackground = (
     }
 
     const bigCircleCenter = getCenter(canvasWidth, canvasHeight);
-    const radius = getCircleRadius(canvasWidth, canvasHeight);
+    const radius = getCircleRadius(canvasWidth, canvasHeight, CANVAS_CIRCLE_MARGIN);
     const bigCircle = new Circle(bigCircleCenter, radius, DEFAULT_LINE_WIDTH, DEFAULT_DRAWINGS_COLOR);
     bigCircle.drawOnCanvas(ctx);
 
@@ -133,12 +132,6 @@ const getCanvasContext = (canvasRef: RefObject<HTMLCanvasElement>): CanvasRender
         throw new Error('This browser does not support 2-dimensional canvas rendering contexts.');
     }
     return context;
-}
-
-export const getCircleRadius = (canvasWidth: number, canvasHeight: number): number => {
-    const shorterSide = Math.min(canvasWidth, canvasHeight);
-    const circleContainerSide = shorterSide - (CANVAS_CIRCLE_MARGIN * 2);
-    return Math.floor(circleContainerSide / 2); 
 }
 
 export function PlayGroundCanvas() {
@@ -207,7 +200,7 @@ export function PlayGroundCanvas() {
 
         drawBackground(canvasContext, canvasDimension!, true);
         const canvasCenter = getCenter(canvasDimension!.width, canvasDimension!.height);
-        const radius = getCircleRadius(canvasDimension!.width, canvasDimension!.height);
+        const radius = getCircleRadius(canvasDimension!.width, canvasDimension!.height, CANVAS_CIRCLE_MARGIN);
 
         // In the coordinate system where the canvasCenter is (0, 0)
         const adjustedWithCenter = {x: xyCoordsInCanvas.x - canvasCenter.x, y: xyCoordsInCanvas.y - canvasCenter.y};
@@ -237,12 +230,11 @@ export function PlayGroundCanvas() {
         const angleInRadian = getAngleInRadian(cosineValue, sineValue, true);
         const angleInDegreeForUI = getAngleInDegreeForUI(angleInRadian);
 
-
         if (angleInDegreeForUI == 180) {
-            decorateDiameter(ctx, canvasCenter, pointOnArcInXY);
+            highlightDiameter(ctx, canvasCenter, pointOnArcInXY);
         }
         else if (angleInDegreeForUI == 90 || angleInDegreeForUI == 270) {
-            decorateRightAngle(ctx, canvasCenter, pointOnArcInXY);
+            highlightRightAngle(ctx, canvasCenter, pointOnArcInXY);
         } else {
             ctx.globalCompositeOperation = "source-over";
             ctx.beginPath();
@@ -260,7 +252,6 @@ export function PlayGroundCanvas() {
         ctx.arc(canvasCenter.x, canvasCenter.y, radius, 0, getAngleInRadian(cosineValue, sineValue, true), true);
         ctx.closePath();
         ctx.fill();
-
 
         console.log(`Angle is ${angleInDegreeForUI} degree`)
     }, [canvasContext, canvasDimension])
@@ -285,9 +276,6 @@ export function PlayGroundCanvas() {
     // If context has already been set to state, we can use that
     useEffect(() => {
         if (canvasContext != null) {
-            // drawInitialState(canvasRef, canvasContext, 
-            //     (canvasDimension ?? { width: DEFAULT_CANVAS_WIDTH, height: DEFAULT_CANVAS_HEIGHT }));
-
             const handlerCircle = drawInitialState(canvasContext, 
                 (canvasDimension ?? { width: DEFAULT_CANVAS_WIDTH, height: DEFAULT_CANVAS_HEIGHT }));
             
@@ -299,11 +287,6 @@ export function PlayGroundCanvas() {
     useEffect(() => {
         if (initialized)
         {}
-
-        // return () => {
-        //     drawInitialState(canvasContext!, 
-        //         (canvasDimension ?? { width: DEFAULT_CANVAS_WIDTH, height: DEFAULT_CANVAS_HEIGHT }));
-        // };
     }, [canvasDimension, initialized] )
 
   return (

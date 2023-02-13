@@ -90,6 +90,12 @@ export const getCenter = (width: number | undefined | null, height: number | und
     };
 }
 
+export const getCircleRadius = (canvasWidth: number, canvasHeight: number, margin: number): number => {
+    const shorterSide = Math.min(canvasWidth, canvasHeight);
+    const circleContainerSide = shorterSide - (margin * 2);
+    return Math.floor(circleContainerSide / 2); 
+}
+
 export const getContainerCoords = (clientCoords: Point, containerRect: DOMRect): Point => {
     return {
         x: clientCoords.x - containerRect.left,
