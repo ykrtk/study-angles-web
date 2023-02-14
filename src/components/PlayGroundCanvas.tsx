@@ -1,7 +1,8 @@
 import styles from '@/styles/PlayGroundCanvas.module.scss'
 import { DEGREE_TO_RADIAN, Circle, Dimension, Point, getAngleInRadian, getContainerCoords, getAngleInDegreeForUI, getCenter, getCircleRadius } from '@/utils/Drawing';
 import { useTranslations } from 'next-intl'
-import { MutableRefObject, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { AngleContext } from './providers/AngleProvider';
 
 const CANVAS_ELEMENT_ID = 'playGroundCanvas';
 const DEFAULT_CANVAS_WIDTH = 500;
@@ -141,6 +142,7 @@ export function PlayGroundCanvas() {
     const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null>(null);
     const [initialized, setInitialized] = useState(false);
     const [handlerCircle, setHandlerCircle] = useState<Circle | null>(null);
+    const { angle, setAngle } = useContext(AngleContext);
     
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const draggingRef = useRef(false);
@@ -253,7 +255,9 @@ export function PlayGroundCanvas() {
         ctx.closePath();
         ctx.fill();
 
-        console.log(`Angle is ${angleInDegreeForUI} degree`)
+        console.log(`Angle is ${angleInDegreeForUI} degree`);
+        setAngle(angleInDegreeForUI);
+        
     }, [canvasContext, canvasDimension])
 
     // Calculate appropriate canvas size based on browser viewport
