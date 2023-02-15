@@ -18,56 +18,6 @@ const RIGHT_ANGLE_STROKE_COLOR = 'red'
 const RIGHT_ANGLE_STROKE_WIDTH = 6
 const SELECTED_SECTOR_FILL_COLOR = 'pink'
 
-const highlightDiameter = (
-    canvasContext: CanvasRenderingContext2D,
-    bigCircleCenter: Point,
-    handlerCircleCenter: Point): void => {
-    
-    const ctx = canvasContext;
-    ctx.globalCompositeOperation = "source-over";
-    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
-    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
-
-    const radius = Math.abs(handlerCircleCenter.x - bigCircleCenter.x);
-    ctx.beginPath();
-    ctx.moveTo(bigCircleCenter.x - radius, bigCircleCenter.y);
-    ctx.lineTo(bigCircleCenter.x + radius, bigCircleCenter.y);
-    ctx.stroke();
-    ctx.closePath();
-}
-
-const highlightRightAngle = (
-    canvasContext: CanvasRenderingContext2D,
-    bigCircleCenter: Point,
-    handlerCircleCenter: Point): void => {
-    
-    const ctx = canvasContext;
-    ctx.globalCompositeOperation = "source-over";
-    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
-    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
-
-    ctx.beginPath();
-    ctx.moveTo(handlerCircleCenter.x, handlerCircleCenter.y);
-    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
-    ctx.stroke();
-    ctx.closePath();
-
-    const radius = Math.abs(handlerCircleCenter.y - bigCircleCenter.y);
-    const rightAngleMarkerX = bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR);
-    const rightAngleMarkerY = ((handlerCircleCenter.y < bigCircleCenter.y) 
-                                ? (bigCircleCenter.y - (radius * ANGLE_MARKER_WIDTH_FACTOR))
-                                : (bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR)));
-    ctx.beginPath();
-    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
-    ctx.lineTo(rightAngleMarkerX, bigCircleCenter.y);
-    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
-    ctx.lineTo(bigCircleCenter.x, rightAngleMarkerY);
-    ctx.moveTo((bigCircleCenter.x + radius), bigCircleCenter.y);
-    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
-    ctx.stroke();
-    ctx.closePath();
-}
-
 const drawBackground = (
     canvasContext: CanvasRenderingContext2D, 
     canvasDimension: Dimension, 
@@ -120,6 +70,56 @@ const drawBackground = (
     return handlerCircleCenter;
 }
 
+const highlightDiameter = (
+    canvasContext: CanvasRenderingContext2D,
+    bigCircleCenter: Point,
+    handlerCircleCenter: Point): void => {
+    
+    const ctx = canvasContext;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
+    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
+
+    const radius = Math.abs(handlerCircleCenter.x - bigCircleCenter.x);
+    ctx.beginPath();
+    ctx.moveTo(bigCircleCenter.x - radius, bigCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x + radius, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+const highlightRightAngle = (
+    canvasContext: CanvasRenderingContext2D,
+    bigCircleCenter: Point,
+    handlerCircleCenter: Point): void => {
+    
+    const ctx = canvasContext;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = RIGHT_ANGLE_STROKE_COLOR;
+    ctx.lineWidth = RIGHT_ANGLE_STROKE_WIDTH;
+
+    ctx.beginPath();
+    ctx.moveTo(handlerCircleCenter.x, handlerCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+
+    const radius = Math.abs(handlerCircleCenter.y - bigCircleCenter.y);
+    const rightAngleMarkerX = bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR);
+    const rightAngleMarkerY = ((handlerCircleCenter.y < bigCircleCenter.y) 
+                                ? (bigCircleCenter.y - (radius * ANGLE_MARKER_WIDTH_FACTOR))
+                                : (bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR)));
+    ctx.beginPath();
+    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
+    ctx.lineTo(rightAngleMarkerX, bigCircleCenter.y);
+    ctx.moveTo(rightAngleMarkerX, rightAngleMarkerY);
+    ctx.lineTo(bigCircleCenter.x, rightAngleMarkerY);
+    ctx.moveTo((bigCircleCenter.x + radius), bigCircleCenter.y);
+    ctx.lineTo(bigCircleCenter.x, bigCircleCenter.y);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 const getCanvasContext = (canvasRef: RefObject<HTMLCanvasElement>): CanvasRenderingContext2D => {
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -147,11 +147,10 @@ export function PlayGroundCanvas() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const draggingRef = useRef(false);
     const handleNativeMouseMoveRef = useRef<(e: MouseEvent) => void>(null) as MutableRefObject<(e: MouseEvent) => void>;
+    const handleNativeTouchMoveRef = useRef<(e: TouchEvent) => void>(null) as MutableRefObject<(e: TouchEvent) => void>;
 
-    const drawInitialState = (
-        canvasContext: CanvasRenderingContext2D, 
-        canvasDimension: Dimension): Circle => {
-
+    const drawInitialState = (canvasContext: CanvasRenderingContext2D, 
+                                canvasDimension: Dimension): Circle => {
         const handlerCircleCenter = drawBackground(canvasContext, canvasDimension, false);
         // Draw the handler circle
         const handlerCircle = new Circle(handlerCircleCenter, HANDLER_CIRCLE_RADIUS, DEFAULT_LINE_WIDTH, 
@@ -160,40 +159,8 @@ export function PlayGroundCanvas() {
         return handlerCircle;
     }
 
-    const handleMouseDown = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        // console.log('mousedown');
-        if (!initialized || !handlerCircle) {
-            console.log('Not properly initialized');
-            return;
-        }
-
-        const coordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
-        // console.log(`inCanvas: ${coordsInCanvas.x}, ${coordsInCanvas.y}`);
-        // console.log(`handlerCenter: ${handlerCircle?.centerPoint?.x}, ${handlerCircle?.centerPoint?.y}`);
-
-        if (handlerCircle.contains(coordsInCanvas)) {
-            draggingRef.current = true;
-            // We need to use useRef to keep the reference to the handleNativeMouseMove event handler,
-            // because in order to get removeEventListener in handleMouseUp() to work as expected, 
-            // we need the idential instance of it which was used for addEventListener
-            handleNativeMouseMoveRef.current = handleNativeMouseMove;
-            canvasRef.current?.addEventListener('mousemove', handleNativeMouseMoveRef.current);
-        }
-    }, [initialized, handlerCircle])
-
-    const handleMouseUp = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        // console.log('mouseup');
-        draggingRef.current = false;
-        canvasRef.current?.removeEventListener('mousemove', handleNativeMouseMoveRef.current);
-    }, [])
-
-    const handleNativeMouseMove = useCallback((e : MouseEvent) => {
-        // console.log('mousemove');
-        if (!draggingRef.current) {
-            return;
-        }
-
-        const xyCoordsInCanvas = getContainerCoords({x: e.clientX, y: e.clientY}, canvasRef.current!.getBoundingClientRect());
+    const drawAngleChange = useCallback((mouseOrTouchPoint: Point) => {
+        const xyCoordsInCanvas = getContainerCoords(mouseOrTouchPoint, canvasRef.current!.getBoundingClientRect());
         // console.log(`coordsInCanvas: ${xyCoordsInCanvas.x}, ${xyCoordsInCanvas.y}`);
         if (!canvasContext) {
             throw new Error('Canvas context is not ready.');
@@ -211,7 +178,7 @@ export function PlayGroundCanvas() {
         const sineValue = adjustedWithCenter.y / distanceFromCenter;
         const pointOnArc = { x: radius * cosineValue, y: radius * sineValue } as Point;
 
-        // Convert to the actual Canvas coordinates
+        // Convert to the actual canvas coordinates
         const pointOnArcInXY = { x: pointOnArc.x + canvasCenter.x, y: pointOnArc.y + canvasCenter.y } as Point;
         
         // Draw the handler circle on the arc of the center circle
@@ -256,10 +223,76 @@ export function PlayGroundCanvas() {
         ctx.fill();
 
         console.log(`Angle is ${angleInDegreeForUI} degree`);
-        setAngle(angleInDegreeForUI);
-        
-    }, [canvasContext, canvasDimension])
+        setAngle(angleInDegreeForUI);        
+    }, [canvasContext, canvasDimension, setAngle])
 
+    const startDragging = useCallback((mouseOrTouchPoint: Point, addEventListener: (() => void)) => {
+        if (!initialized || !handlerCircle) {
+            console.log('Not properly initialized');
+            return;
+        }
+
+        const coordsInCanvas = getContainerCoords(mouseOrTouchPoint, canvasRef.current!.getBoundingClientRect());
+        // console.log(`inCanvas: ${coordsInCanvas.x}, ${coordsInCanvas.y}`);
+        // console.log(`handlerCenter: ${handlerCircle?.centerPoint?.x}, ${handlerCircle?.centerPoint?.y}`);
+
+        if (handlerCircle.contains(coordsInCanvas)) {
+            draggingRef.current = true;
+            addEventListener();
+        }
+    }, [handlerCircle, initialized]);
+
+    const handleNativeMouseMove = useCallback((e: MouseEvent) => {
+        // console.log('mousemove');
+        if (!draggingRef.current) {
+            return;
+        }
+        drawAngleChange({x: e.clientX, y: e.clientY});
+    }, [drawAngleChange]);
+
+    const handleNativeTouchMove = useCallback((e: TouchEvent) => {
+        // console.log('mousemove');
+        if (!draggingRef.current) {
+            return;
+        }
+        const touchList = e.changedTouches[0];
+        drawAngleChange({x: touchList.clientX, y: touchList.clientY});
+    }, [drawAngleChange]);
+
+    const handleMouseDown = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
+        // console.log('mousedown');
+        startDragging({x: e.clientX, y: e.clientY}, () => {
+            // We need to use useRef to keep the reference to the handleNativeMouseMove event handler,
+            // because in order to get removeEventListener in handleMouseUp() to work as expected, 
+            // we need the idential instance of it which was used for addEventListener
+            // handleNativeMoveRef.current = handleNativeMouseOrTouchMove;
+            // canvasRef.current?.addEventListener('mousemove', handleNativeMoveRef.current);
+            handleNativeMouseMoveRef.current = handleNativeMouseMove;
+            canvasRef.current?.addEventListener('mousemove', handleNativeMouseMoveRef.current);
+        });
+    }, [handleNativeMouseMove, startDragging])
+
+    const handleTouchStart = useCallback((e: React.TouchEvent<HTMLCanvasElement>) => {
+        // // console.log('touchstart');
+        const touchList = e.changedTouches[0];
+        startDragging({x: touchList.clientX, y: touchList.clientY}, () => {
+            handleNativeTouchMoveRef.current = handleNativeTouchMove;
+            canvasRef.current?.addEventListener('touchmove', handleNativeTouchMoveRef.current);
+        });
+    }, [handleNativeTouchMove, startDragging])
+
+    const handleMouseUp = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
+        // console.log('mouseup');
+        draggingRef.current = false;
+        canvasRef.current?.removeEventListener('mousemove', handleNativeMouseMoveRef.current);
+    }, []);
+
+    const handleTouchEnd = useCallback((e : React.TouchEvent<HTMLCanvasElement>) => {
+        // console.log('touchup');
+        draggingRef.current = false;
+        canvasRef.current?.removeEventListener('touchmove', handleNativeTouchMoveRef.current);
+    }, []);
+    
     // Calculate appropriate canvas size based on browser viewport
     useEffect(() => {
         const parentWidth = canvasRef.current?.parentElement?.clientWidth ?? DEFAULT_CANVAS_WIDTH;
@@ -301,7 +334,9 @@ export function PlayGroundCanvas() {
         width={(canvasDimension?.width ?? DEFAULT_CANVAS_WIDTH)} 
         height={(canvasDimension?.height ?? DEFAULT_CANVAS_HEIGHT)}
         onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}>
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}>
             {t('canvasNotSupported')}
     </canvas>
   );
