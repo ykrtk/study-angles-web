@@ -1,16 +1,17 @@
 .angleindicator {
     text-align: center;
-    font-size: x-large;
+    font-size: 28px;
     font-weight: bold;
 }
 
 .indicatortext {
+    white-space: nowrap;
+    overflow-x: visible;
     margin-block-start: 0;
     margin-block-end: 0;
 }
 
 .degree {
-    font-size: xx-large;
     font-size: 2em;
     padding: 0 5px 0 5px;
 }
