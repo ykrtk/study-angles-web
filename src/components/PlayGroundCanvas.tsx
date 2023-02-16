@@ -108,7 +108,7 @@ const highlightRightAngle = (
     ctx.closePath();
 
     const radius = Math.abs(handlerCircleCenter.y - bigCircleCenter.y);
-    const rightAngleMarkerX = bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR);
+    const rightAngleMarkerX = bigCircleCenter.x + (radius * ANGLE_MARKER_WIDTH_FACTOR);
     const rightAngleMarkerY = ((handlerCircleCenter.y < bigCircleCenter.y) 
                                 ? (bigCircleCenter.y - (radius * ANGLE_MARKER_WIDTH_FACTOR))
                                 : (bigCircleCenter.y + (radius * ANGLE_MARKER_WIDTH_FACTOR)));
