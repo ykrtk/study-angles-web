@@ -5,8 +5,11 @@ import { MutableRefObject, RefObject, useCallback, useContext, useEffect, useRef
 import { AngleContext } from './providers/AngleProvider';
 
 const CANVAS_ELEMENT_ID = 'playGroundCanvas';
-const DEFAULT_CANVAS_WIDTH = 500;
-const DEFAULT_CANVAS_HEIGHT = 500;
+const DEFAULT_CANVAS_WIDTH = 400;
+const DEFAULT_CANVAS_HEIGHT = 400;
+const HEADER_APPROX_MARGIN = 100;
+const ANGLE_INDICATOR_APPROX_MARGIN = 30;
+
 const CANVAS_CIRCLE_MARGIN = 40;
 const HANDLER_CIRCLE_RADIUS = 20;
 const ANGLE_MARKER_WIDTH_FACTOR = 0.23
@@ -148,6 +151,15 @@ export function PlayGroundCanvas() {
     const draggingRef = useRef(false);
     const handleNativeMouseMoveRef = useRef<(e: MouseEvent) => void>(null) as MutableRefObject<(e: MouseEvent) => void>;
     const handleNativeTouchMoveRef = useRef<(e: TouchEvent) => void>(null) as MutableRefObject<(e: TouchEvent) => void>;
+
+    const calculateCanvasDimension = (): Dimension => {
+        const parentWidth = canvasRef.current?.parentElement?.clientWidth ?? DEFAULT_CANVAS_WIDTH;
+        const parentHeight = canvasRef.current?.parentElement?.clientHeight ?? DEFAULT_CANVAS_HEIGHT;
+        const shorterParentSide = Math.min(parentWidth, parentHeight);
+        const canvasHeight = shorterParentSide - HEADER_APPROX_MARGIN - ANGLE_INDICATOR_APPROX_MARGIN;
+        const canvasWidth = shorterParentSide;
+        return {width: canvasWidth, height: canvasHeight};
+    }
 
     const drawInitialState = (canvasContext: CanvasRenderingContext2D, 
                                 canvasDimension: Dimension): Circle => {
@@ -292,21 +304,14 @@ export function PlayGroundCanvas() {
         draggingRef.current = false;
         canvasRef.current?.removeEventListener('touchmove', handleNativeTouchMoveRef.current);
     }, []);
-    
-    // Calculate appropriate canvas size based on browser viewport
-    useEffect(() => {
-        const parentWidth = canvasRef.current?.parentElement?.clientWidth ?? DEFAULT_CANVAS_WIDTH;
-        const parentHeight = canvasRef.current?.parentElement?.clientHeight ?? DEFAULT_CANVAS_HEIGHT;
-        const shorterParentSide = Math.min(parentWidth, parentHeight);
-        const canvasWidth = shorterParentSide - 10;
-        const canvasHeight = shorterParentSide - 10;
 
-        setCanvasDimension({width: canvasWidth, height: canvasHeight});
+    useEffect(() => {
+        // Calculate appropriate canvas size based on browser viewport
+        setCanvasDimension(calculateCanvasDimension());
     }, []);
 
-    // Add CanvasRenderingContext to state after the component has been initialized
     useEffect(() => {
-        // setCanvasContext(getCanvasContext(CANVAS_ELEMENT_ID));
+        // Add CanvasRenderingContext to state after the component has been initialized
         setCanvasContext(getCanvasContext(canvasRef));
     }, []);
 
