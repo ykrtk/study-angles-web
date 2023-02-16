@@ -8,12 +8,33 @@ import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
 import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
+
+const renderFooter = (isTouchSupportDevice: boolean): JSX.Element | null => {
+  if (isTouchSupportDevice) {
+    // Do not render footer
+    return null;
+  } else {
+    return (
+      <div>
+        <hr />
+        <Footer />
+      </div>
+    );
+  }
+}
 
 export default function Index() {
   const t = useTranslations('Index');
   const fontFamily = t('fontFamily');
+  const [isTouchSupported, setIsTouchSupported] = useState(false);
+  
+  useEffect(() => {
+    const hasTouchPoints = (navigator.maxTouchPoints > 0);
+    setIsTouchSupported(hasTouchPoints);
+  }, []);
 
   return (
     <div className={styles.content}>
@@ -36,8 +57,7 @@ export default function Index() {
           </div>
         </section>
       </main>
-      <hr />
-      <Footer />
+      {renderFooter(isTouchSupported)}
     </div>
   )
 }
