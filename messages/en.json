@@ -7,8 +7,7 @@
     },
     "Index": {
         "fontFamily": "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif",
-        "htmlTitle": "Study Angles Web Site",
-        "playGroundSectionTitle": "Let's play with angles"
+        "htmlTitle": "Study Angles Web Site"
     },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
@@ -18,5 +17,11 @@
     },
     "PlayGroundCanvas": {
         "canvasNotSupported": "Your browser does not seem to support HTML5 canvas. Please use browser with HTML5 canvas support."
+    },
+    "PlayGroundDescription": {
+        "playGroundSectionTitle": "Let's play with angles",
+        "instructionItem1": "Temporary text",
+        "instructionItem2": "Temporary text",
+        "instructionItem3": "Temporary text"
     }
 }

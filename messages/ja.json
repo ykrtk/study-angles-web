@@ -7,8 +7,7 @@
     },
     "Index": {
         "fontFamily": "'游ゴシック体', 'Yu Gothic Medium', YuGothicM, '游ゴシック Medium', YuGothic, 'Yu Gothic', '游ゴシック', 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif",
-        "htmlTitle": "角度を学ぼう",
-        "playGroundSectionTitle": "自由に角度をつくってみよう"
+        "htmlTitle": "角度を学ぼう"
     },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
@@ -18,5 +17,11 @@
     },
     "PlayGroundCanvas": {
         "canvasNotSupported": "HTML5 canvas がサポートされていません。HTML5 canvas をサポートしているWebブラウザでアクセスしてください。"
+    },
+    "PlayGroundDescription": {
+        "playGroundSectionTitle": "自由に角度をつくってみよう",
+        "instructionItem1": "大きな円の上の小さな丸をマウスやタッチでつかんで動かしてみよう",
+        "instructionItem2": "小さな丸を動かすと、色のついた部分の角度が変わります",
+        "instructionItem3": "直角や水平をつくってみよう"
     }
 }

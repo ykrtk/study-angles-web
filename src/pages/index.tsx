@@ -6,8 +6,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
-import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
+import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
+import { PlayGroundDescription } from '@/components/PlayGroundDescription'
 import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -30,7 +31,7 @@ export default function Index() {
   const t = useTranslations('Index');
   const fontFamily = t('fontFamily');
   const [isTouchSupported, setIsTouchSupported] = useState(false);
-  
+
   useEffect(() => {
     const hasTouchPoints = (navigator.maxTouchPoints > 0);
     setIsTouchSupported(hasTouchPoints);
@@ -53,7 +54,7 @@ export default function Index() {
             <PlayGroundCanvas />
           </div>
           <div className={styles.playgrounddesc}>
-            <h2>{t('playGroundSectionTitle')}</h2>
+            <PlayGroundDescription />
           </div>
         </section>
       </main>
