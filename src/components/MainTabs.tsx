@@ -11,7 +11,7 @@ import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 import { PlayGroundDescription } from '@/components/PlayGroundDescription'
 import { useTranslations } from 'next-intl';
 
-const THEME_COLOR = 'steelblue'
+const THEME_COLOR = '#4682B4'; // 'steelblue'
 
 interface MainTabProps {
   fontFamily: string;
@@ -23,13 +23,21 @@ interface TabPanelProps {
   value: number;
 }
 
-const textTheme = (fontFamily: string, fontSize: string) => createTheme({
+const customTheme = (fontFamily: string, fontSize: string) => createTheme({
   typography: {
     allVariants: {
       fontFamily: fontFamily,
       fontSize: fontSize
     },
   },
+  palette: {
+    // TODO: Support dark mode referring to 
+    // https://mui.com/material-ui/customization/dark-mode/#dark-mode-with-a-custom-palette
+    // mode: 'dark',
+    primary: {
+      main: THEME_COLOR
+    }
+  }
 });
 
 function TabPanel(props: TabPanelProps) {
@@ -68,7 +76,7 @@ export function MainTabs(props: MainTabProps) {
   };
 
   return (
-    <ThemeProvider theme={textTheme(props.fontFamily, "100%")}>
+    <ThemeProvider theme={customTheme(props.fontFamily, "100%")}>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs 
