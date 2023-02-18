@@ -1,9 +1,8 @@
 .footer {
     font-family: system-ui, Roboto, Helvetica, "Segoe UI", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 0;
+    padding: 5px;
 }
