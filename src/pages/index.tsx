@@ -1,15 +1,16 @@
 import styles from '@/styles/Index.module.scss'
+
+import { useEffect, useState } from 'react'
 import { Inter } from '@next/font/google'
-import { GetStaticPropsContext } from 'next'
-import { useTranslations } from 'next-intl'
 import Head from 'next/head'
 import Image from 'next/image'
+import { GetStaticPropsContext } from 'next'
+import { useTranslations } from 'next-intl'
+
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
-import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
-import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
-import { PlayGroundDescription } from '@/components/PlayGroundDescription'
-import { useEffect, useState } from 'react'
+import { MainTabs } from '@/components/MainTabs'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -47,16 +48,9 @@ export default function Index() {
       </Head>
       <Headline fontFamily={fontFamily} />
       <hr />
+
       <main className={styles.main} style={{"fontFamily" : fontFamily}}>
-        <section className={styles.playgroundcontainer}>
-          <div className={styles.playgroundcanvas}>
-            <PlayGroundAngleIndicator />
-            <PlayGroundCanvas />
-          </div>
-          <div className={styles.playgrounddesc}>
-            <PlayGroundDescription />
-          </div>
-        </section>
+        <MainTabs fontFamily={fontFamily} />
       </main>
       {renderFooter(isTouchSupported)}
     </div>

@@ -9,6 +9,11 @@
         "fontFamily": "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif",
         "htmlTitle": "Study Angles Web Site"
     },
+    "MainTabs": {
+        "tabAriaLabel": "Navigation Tab",
+        "tabNameForPlayWithAngles": "Tab one",
+        "tabNameForAnglesQuiz": "Tab two"
+    },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
     },
