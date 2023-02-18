@@ -1,21 +1,22 @@
+@import "variables.module.scss";
+
 h1.title {
-    font-size: xxx-large;
+    font-size: $custom-font-size-xx-large;
     font-weight: bold;
     text-align: center;
-    // padding: 1rem;
-    margin-block-start: 0em;
-    margin-block-end: 0em;
+    margin-block-start: 0;
+    margin-block-end: 0;
 
     @media (max-width: 768px) {
-        font-size: xx-large;
+        font-size: $custom-font-size-x-large;
     }
 }
 
 .header {
     display: flex;
-    text-align: center;
     justify-content: center;
     align-items: center;
     position: relative;
+    text-align: center;
     padding: 1rem;
 }

@@ -1,17 +1,32 @@
+@import "variables.module.scss";
+
 .angleindicator {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    height: 80px;
+    margin-top: 0px;
 }
 
 .indicatortext {
-    white-space: nowrap;
-    overflow-x: visible;
-    margin-block-start: 0;
-    margin-block-end: 0;
+    // This font size has to match with
+    // .pgdescheading of PlayGroundDescription.module.scss
+    // in order to make the baseline of the two headings aligned
+    font-size: $custom-font-size-x-large;
+    margin: 0 auto 0 auto;
+
+    // font-weight: bold;
+    // white-space: nowrap;
+    // overflow-x: visible;
+    // margin-inline-start: 0;
+    // margin-inline-end: 0;
+    // margin: 0 5px 0 5px;
 }
 
 .degree {
-    font-size: 2em;
+    // This font size has to match with
+    // .dummyforalign of PlayGroundDescription.module.scss
+    // in order to make the baseline of the two headings aligned
+    font-size: $custom-font-size-xx-large;
+    vertical-align: baseline; 
     padding: 0 5px 0 5px;
 }

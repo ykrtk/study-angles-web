@@ -1,10 +1,31 @@
-.title {
+@import "variables.module.scss";
+
+.pgdescheadline {
+    display: flex;
+    align-items: flex-end;
+    height: 80px;
     text-align: center;
-    font-size: 28px;
-    margin-top: 22px;
+    margin-top: 0px;
+}
+
+.pgdescheading {
+    // This font size has to match with
+    // .indicatortext of PlayGroundAngleIndicator.module.scss
+    // in order to make the baseline of the two headings aligned
+    font-size: $custom-font-size-x-large;
+    margin: 0 auto 0 auto;
+}
+
+.dummyforalign {
+    // This font size has to match with
+    // .degree of PlayGroundAngleIndicator.module.scss
+    // in order to make the baseline of the two headings aligned
+    font-size: $custom-font-size-xx-large;
+    vertical-align: baseline; 
+    padding: 0;
 }
 
 .instruction {
-    font-size: x-large;
+    font-size: $custom-font-size-large;
     margin-left: 50px;
 }

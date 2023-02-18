@@ -9,10 +9,10 @@ export function PlayGroundAngleIndicator() {
 
   return (
     <div className={styles.angleindicator}>
-        <p className={styles.indicatortext}>{t.rich('currentAngleDegree', {
-            degree: angle,
-            important: (chunks) => <span className={styles.degree}>{chunks}</span>
-        })}</p>
+      <h2 className={styles.indicatortext}>{t.rich('currentAngleDegree', {
+          degree: angle,
+          important: (chunks) => <span className={styles.degree}>{chunks}</span>
+      })}</h2>
     </div>
   );
 }
