@@ -13,24 +13,24 @@ import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const renderFooter = (isTouchSupportDevice: boolean): JSX.Element | null => {
-  if (isTouchSupportDevice) {
-    // Do not render footer
-    return null;
-  } else {
-    return (
-      <div>
-        <hr />
-        <Footer />
-      </div>
-    );
-  }
-}
-
 export default function Index() {
   const t = useTranslations('Index');
   const fontFamily = t('fontFamily');
   const [isTouchSupported, setIsTouchSupported] = useState(false);
+
+  const renderFooter = (isTouchSupportDevice: boolean): JSX.Element | null => {
+    if (isTouchSupportDevice) {
+      // Do not render footer
+      return null;
+    } else {
+      return (
+        <div>
+          <hr />
+          <Footer />
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     const hasTouchPoints = (navigator.maxTouchPoints > 0);
