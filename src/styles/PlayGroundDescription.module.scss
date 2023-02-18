@@ -14,6 +14,10 @@
     // in order to make the baseline of the two headings aligned
     font-size: $custom-font-size-x-large;
     margin: 0 auto 0 auto;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-large;
+    }
 }
 
 .dummyforalign {
@@ -23,9 +27,17 @@
     font-size: $custom-font-size-xx-large;
     vertical-align: baseline; 
     padding: 0;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-x-large;
+    }
 }
 
 .instruction {
     font-size: $custom-font-size-large;
     margin-left: 50px;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-normal;
+    }
 }

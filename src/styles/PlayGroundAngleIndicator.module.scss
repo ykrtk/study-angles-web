@@ -5,6 +5,11 @@
     align-items: flex-end;
     height: 80px;
     margin-top: 0px;
+
+    @include query (mobile) {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
 }
 
 .indicatortext {
@@ -20,6 +25,10 @@
     // margin-inline-start: 0;
     // margin-inline-end: 0;
     // margin: 0 5px 0 5px;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-large;
+    }
 }
 
 .degree {
@@ -29,4 +38,8 @@
     font-size: $custom-font-size-xx-large;
     vertical-align: baseline; 
     padding: 0 5px 0 5px;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-x-large;
+    }
 }
