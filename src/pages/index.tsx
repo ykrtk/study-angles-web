@@ -52,7 +52,7 @@ export default function Index() {
       <main className={styles.main} style={{"fontFamily" : fontFamily}}>
         <MainTabs fontFamily={fontFamily} />
       </main>
-      {renderFooter(isTouchSupported)}
+      {/* {renderFooter(isTouchSupported)} */}
     </div>
   )
 }
