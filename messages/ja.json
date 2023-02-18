@@ -13,14 +13,14 @@
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
     },
     "PlayGroundAngleIndicator": {
-        "currentAngleDegree": "現在、色がついている部分の角度は <important>{degree}</important> 度です"
+        "currentAngleDegree": "現在、色つきの部分の角度は <important>{degree}</important> 度です"
     },
     "PlayGroundCanvas": {
         "canvasNotSupported": "HTML5 canvas がサポートされていません。HTML5 canvas をサポートしているWebブラウザでアクセスしてください。"
     },
     "PlayGroundDescription": {
         "playGroundSectionTitle": "自由に角度をつくってみよう",
-        "instructionItem1": "大きな円の上の小さな丸をマウスやタッチでつかんで動かしてみよう",
+        "instructionItem1": "大きな円の上の小さな丸をマウスやタッチでつかんで反時計回りに動かしてみよう",
         "instructionItem2": "小さな丸を動かすと、色のついた部分の角度が変わります",
         "instructionItem3": "直角や水平をつくってみよう"
     }
