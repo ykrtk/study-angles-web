@@ -62,6 +62,41 @@ export class Circle {
     }
 }
 
+const drawRectangleForDebug = (
+    canvasContext: CanvasRenderingContext2D, 
+    canvasDimension: Dimension): void => {
+
+    const canvasWidth = canvasDimension.width;
+    const canvasHeight = canvasDimension.height;
+    const ctx = canvasContext!;
+
+    ctx.beginPath();
+    ctx.lineWidth = 8;
+    ctx.strokeStyle = 'black';
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvasWidth, 0);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(canvasWidth, 0);
+    ctx.lineTo(canvasWidth, canvasHeight);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(canvasWidth, canvasHeight);
+    ctx.lineTo(0, canvasHeight);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.lineTo(0, canvasHeight);
+    ctx.lineTo(0, 0);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 export const getAngleInDegreeForUI = (angleInRadian: number) : number => {
     return Math.round(360 - (angleInRadian / DEGREE_TO_RADIAN));
 }
