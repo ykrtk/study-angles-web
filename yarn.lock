@@ -3931,6 +3931,7 @@ __metadata:
     react: ^18.2.0
     react-dom: 18.2.0
     sass: ^1.58.0
+    swr: ^2.0.3
     typescript: 4.9.4
   languageName: unknown
   linkType: soft
@@ -3980,6 +3981,17 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"swr@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "swr@npm:2.0.3"
+  dependencies:
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.11.0 || ^17.0.0 || ^18.0.0
+  checksum: 968071e3336b81194879fd94553777793314e773cd2a27665617131403dca6b7e4d3697ab00d0b0aa456c107c0c8d86f9ce52bac22f8533e8421099870d46b17
   languageName: node
   linkType: hard
 
@@ -4179,6 +4191,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 264990ca0a19630a980930e6ca3f4d1a2b2d5ac17bd255ec88b58508a6ad77f20f0743408542584470bac3df062a87f3c3e829fe19b55a4ea5c844fdacef0bc4
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
   languageName: node
   linkType: hard
 
