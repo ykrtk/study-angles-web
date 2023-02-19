@@ -10,6 +10,7 @@ import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
 import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 import { PlayGroundDescription } from '@/components/PlayGroundDescription'
 import { useTranslations } from 'next-intl';
+import { AngleQuiz } from './AngleQuiz';
 
 
 const THEME_COLOR = '#4682B4'; // 'steelblue'
@@ -93,7 +94,7 @@ export function MainTabs(props: MainTabProps) {
             }}
           >
             <Tab label={t('tabNameForPlayWithAngles')} {...a11yProps(0)} />
-            <Tab label={t('tabNameForAnglesQuiz')} {...a11yProps(1)} />
+            <Tab label={t('tabNameForAngleQuiz')} {...a11yProps(1)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -108,8 +109,7 @@ export function MainTabs(props: MainTabProps) {
           </section>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* TODO */}
-          Under construction
+            <AngleQuiz fontFamily={props.fontFamily} />
         </TabPanel>
       </Box>
     </ThemeProvider>

@@ -1,4 +1,11 @@
 {
+    "AngleQuiz": {
+        "headline": "Answer these quizzes about angles",
+        "loadingData": "Loading data...",
+        "errorLoadingData": "An error occurred while loading data",
+        "gallerySubHeader": "Click one of the quizzes from this list",
+        "quizHeading": "How many degrees is this angle?"
+    },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"
     },
@@ -12,7 +19,7 @@
     "MainTabs": {
         "tabAriaLabel": "Navigation Tab",
         "tabNameForPlayWithAngles": "Tab one",
-        "tabNameForAnglesQuiz": "Tab two"
+        "tabNameForAngleQuiz": "Tab two"
     },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"

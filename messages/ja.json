@@ -1,4 +1,11 @@
 {
+    "AngleQuiz": {
+        "headline": "角度を当てよう",
+        "loadingData": "データの読み込み中です",
+        "errorLoadingData": "データの読み込み中にエラーが発生しました",
+        "gallerySubHeader": "問題をひとつ選んでクリックしてください",
+        "quizHeading": "色つきの部分の角度は何度？"
+    },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"
     },
@@ -12,7 +19,7 @@
     "MainTabs": {
         "tabAriaLabel": "ナビゲーションタブ",
         "tabNameForPlayWithAngles": "自由に角度をつくってみよう",
-        "tabNameForAnglesQuiz": "角度クイズ"
+        "tabNameForAngleQuiz": "角度クイズ"
     },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"

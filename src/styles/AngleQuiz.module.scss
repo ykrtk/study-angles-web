@@ -1,0 +1,88 @@
+@import "variables.module.scss";
+
+.quizcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-items: stretch;
+    gap: 20px;
+    margin-top: 30px;
+    // height: 90vh;
+
+    @include query (mobile) {
+      flex-direction: column;
+    }
+}
+  
+.quizmain {
+    display: block;
+    height: 100%;
+    width: 100%;
+    // min-width: 370px;
+    // max-width: 800px;
+  
+    @media (max-height: 768px) {
+      max-width: 400px;
+    }
+  
+    @media (max-height: 1200px) {
+      max-width: 700px;
+    }
+  
+    @include query (mobile) {
+      min-width: 410px;
+    }
+}
+
+.quizgallery {
+    display: block;
+    width: 400px;
+    min-width: 200px;
+    max-width: 600px;
+    height: 100%;
+  
+    @include query (mobile) {
+        flex-direction: column;
+        margin: 20px;
+    }
+}
+
+.quizheading {
+    font-size: $custom-font-size-x-large;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    width: inherit;
+
+    @include query (mobile) {
+        font-size: $custom-font-size-large;
+        text-align: left;
+    }
+}
+
+.quizimagecontainer {
+    text-align: center;
+    margin: 0 auto 0 auto;
+    padding: 20px;
+}
+
+.quizimage {
+    margin: 0 auto 0 auto;
+
+    @include query (mobile) {
+        width: 350px;
+        height: 270px;
+    }
+}
+
+.gallerysubheader {
+    font-size: $custom-font-size-large;
+    font-weight: bold;
+    color: rgb(var(--foreground-rgb));
+    background-color: rgb(var(--background-start-rgb));
+}
+
+.imageitembar {
+    font-size: $custom-font-size-xx-large;
+    font-weight: bold;
+}
