@@ -55,10 +55,11 @@ export function AngleQuizImage(props: AngleQuizImageProps) {
                     ))}
                 </RadioGroup>
             </FormControl>
-            <Button className={styles.checkanswerbutton} variant="contained">
-                {t('checkAnswerButtonLabel')}
-            </Button>
-
+            <div className={styles.checkansbuttoncontainer}>
+                <Button className={styles.checkanswerbutton} variant="contained">
+                    {t('checkAnswerButtonLabel')}
+                </Button>                            
+            </div>
         </div>
     );
 }
