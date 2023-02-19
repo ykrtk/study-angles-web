@@ -3,8 +3,13 @@
         "headline": "角度を当てよう",
         "loadingData": "データの読み込み中です",
         "errorLoadingData": "データの読み込み中にエラーが発生しました",
-        "gallerySubHeader": "問題をひとつ選んでクリックしてください",
+        "gallerySubHeader": "問題をひとつ選んでクリックしよう",
         "quizHeading": "色つきの部分の角度は何度？"
+    },
+    "AngleQuizImage": {
+        "radioButtonGroupLabel": "答えを選んでみよう",
+        "radioButtonLabel": "{degree} 度",
+        "checkAnswerButtonLabel": "答えをチェック"
     },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"

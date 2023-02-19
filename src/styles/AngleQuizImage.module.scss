@@ -1,0 +1,31 @@
+@import "variables.module.scss";
+
+.quizimagecontainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto 0 auto;
+    padding: 20px;
+}
+
+.quizimage {
+    margin: 0 auto 0 auto;
+
+    @include query (mobile) {
+        width: 350px;
+        height: 270px;
+    }
+}
+
+.radiobuttongrouplabel {
+    margin: 10px auto 5px auto;
+}
+
+.radiobuttongroup {
+    margin: 5px auto 10px auto;
+}
+
+.checkanswerbutton {
+    margin: 10px auto 10px auto;
+    width: 300px;
+}

@@ -60,21 +60,6 @@
     }
 }
 
-.quizimagecontainer {
-    text-align: center;
-    margin: 0 auto 0 auto;
-    padding: 20px;
-}
-
-.quizimage {
-    margin: 0 auto 0 auto;
-
-    @include query (mobile) {
-        width: 350px;
-        height: 270px;
-    }
-}
-
 .gallerysubheader {
     font-size: $custom-font-size-large;
     font-weight: bold;

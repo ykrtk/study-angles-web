@@ -5,6 +5,7 @@ import { ImageList, ImageListItem, ImageListItemBar, ListSubheader } from '@mui/
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import useSWR from 'swr'
+import { AngleQuizImage } from './AngleQuizImage'
 
 const QUIZ_MAIN_IMG_WIDTH = 550;
 const QUIZ_MAIN_IMG_HEIGHT = 424;
@@ -62,16 +63,13 @@ export function AngleQuiz(props: AngleQuizProps) {
         <div className={styles.quizcontainer}>
             <div className={styles.quizmain}>
                 <h2 className={styles.quizheading}>{t('quizHeading')}</h2>
-                <div className={styles.quizimagecontainer}>
-                    <Image
-                        className={styles.quizimage}
-                        src={`${getImageUrl(getQuizIdFromIndex(selectedIndex), QUIZ_MAIN_IMG_WIDTH)}`}
-                        alt={`Image ${getQuizIdFromIndex(selectedIndex)}`}
-                        width={QUIZ_MAIN_IMG_WIDTH}
-                        height={QUIZ_MAIN_IMG_HEIGHT}
-                        loading="lazy"
-                    />
-                </div>
+                <AngleQuizImage
+                    selectedQuiz={quizzes.find((q: Quiz) => q.id === getQuizIdFromIndex(selectedIndex))}
+                    imageUrl={`${getImageUrl(getQuizIdFromIndex(selectedIndex), QUIZ_MAIN_IMG_WIDTH)}`}
+                    imageWidth={QUIZ_MAIN_IMG_WIDTH}
+                    imageHeight={QUIZ_MAIN_IMG_HEIGHT}
+                    fontFamily={props.fontFamily}
+                />
             </div>
             <div className={styles.quizgallery}>
                 <ImageList cols={1} 

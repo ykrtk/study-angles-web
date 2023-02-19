@@ -6,6 +6,11 @@
         "gallerySubHeader": "Click one of the quizzes from this list",
         "quizHeading": "How many degrees is this angle?"
     },
+    "AngleQuizImage": {
+        "radioButtonGroupLabel": "Choose your answer",
+        "radioButtonLabel": "{degree} degrees",
+        "checkAnswerButtonLabel": "Check your answer"
+    },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"
     },
