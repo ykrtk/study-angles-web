@@ -16,6 +16,7 @@ const THEME_COLOR = '#4682B4'; // 'steelblue'
 
 interface MainTabProps {
   fontFamily: string;
+  isDarkModeEnabled: boolean;
 }
 
 interface TabPanelProps {
@@ -24,7 +25,7 @@ interface TabPanelProps {
   value: number;
 }
 
-const customTheme = (fontFamily: string, fontSize: string) => createTheme({
+const getCustomTheme = (fontFamily: string, fontSize: string, isDarkMode: boolean) => createTheme({
   typography: {
     allVariants: {
       fontFamily: fontFamily,
@@ -33,14 +34,11 @@ const customTheme = (fontFamily: string, fontSize: string) => createTheme({
     },
   },
   palette: {
-    // TODO: Support dark mode referring to 
-    // https://mui.com/material-ui/customization/dark-mode/#dark-mode-with-a-custom-palette
-    // mode: 'dark',
-    primary: {
-      main: THEME_COLOR
-    }
-  }
-});
+      mode: (isDarkMode ? 'dark' : 'light'),
+      primary: {
+        main: THEME_COLOR
+      },
+  }});
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -78,7 +76,7 @@ export function MainTabs(props: MainTabProps) {
   };
 
   return (
-    <ThemeProvider theme={customTheme(props.fontFamily, "100%")}>
+    <ThemeProvider theme={getCustomTheme(props.fontFamily, "100%", props.isDarkModeEnabled)}>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs 
@@ -114,6 +112,6 @@ export function MainTabs(props: MainTabProps) {
           Under construction
         </TabPanel>
       </Box>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }

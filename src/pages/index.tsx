@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import { Footer } from '@/components/Footer'
 import { Headline } from '@/components/Headline'
 import { MainTabs } from '@/components/MainTabs'
+import { useMediaQuery } from '@mui/material'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -50,7 +51,7 @@ export default function Index() {
       <hr />
 
       <main className={styles.main} style={{"fontFamily" : fontFamily}}>
-        <MainTabs fontFamily={fontFamily} />
+        <MainTabs fontFamily={fontFamily} isDarkModeEnabled={useMediaQuery('(prefers-color-scheme: dark)')}/>
       </main>
       {/* {renderFooter(isTouchSupported)} */}
     </div>
