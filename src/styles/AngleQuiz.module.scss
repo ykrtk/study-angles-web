@@ -61,10 +61,10 @@
 }
 
 .gallerysubheader {
-    font-size: $custom-font-size-large;
-    font-weight: bold;
-    color: rgb(var(--foreground-rgb));
-    background-color: rgb(var(--background-start-rgb));
+    font-size: $custom-font-size-large !important;
+    font-weight: bold !important;
+    color: rgb(var(--foreground-rgb)) !important;
+    background-color: rgb(var(--background-start-rgb)) !important;
 }
 
 .imageitembar {
