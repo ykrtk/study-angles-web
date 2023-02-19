@@ -1,6 +1,6 @@
 import styles from '@/styles/MainTabs.module.scss'
 
-import * as React from 'react';
+import { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -10,6 +10,7 @@ import { PlayGroundAngleIndicator } from '@/components/PlayGroundAngleIndicator'
 import { PlayGroundCanvas } from '@/components/PlayGroundCanvas'
 import { PlayGroundDescription } from '@/components/PlayGroundDescription'
 import { useTranslations } from 'next-intl';
+
 
 const THEME_COLOR = '#4682B4'; // 'steelblue'
 
@@ -27,7 +28,8 @@ const customTheme = (fontFamily: string, fontSize: string) => createTheme({
   typography: {
     allVariants: {
       fontFamily: fontFamily,
-      fontSize: fontSize
+      fontSize: fontSize,
+      fontWeight: 'bold'
     },
   },
   palette: {
@@ -69,7 +71,7 @@ function a11yProps(index: number) {
 
 export function MainTabs(props: MainTabProps) {
   const t = useTranslations('MainTabs');
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
