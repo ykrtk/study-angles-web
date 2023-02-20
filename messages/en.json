@@ -29,8 +29,8 @@
     },
     "MainTabs": {
         "tabAriaLabel": "Navigation Tab",
-        "tabNameForPlayWithAngles": "Tab one",
-        "tabNameForAngleQuiz": "Tab two"
+        "tabNameForPlayWithAngles": "Let's make any angle you like",
+        "tabNameForAngleQuiz": "Angle quiz"
     },
     "Navigation": {
         "switchLocale": "{locale, select, ja {日本語ページへ} en {Switch to English} other {Switch to English}}"
@@ -43,8 +43,8 @@
     },
     "PlayGroundDescription": {
         "playGroundSectionTitle": "Let's play with angles",
-        "instructionItem1": "Temporary text",
-        "instructionItem2": "Temporary text",
-        "instructionItem3": "Temporary text"
+        "instructionItem1": "Let's grab the small circle on the arc of the big circle with mouse or touch. Move it counterclockwise.",
+        "instructionItem2": "As the small circle moves, the angle of the colored area changes.",
+        "instructionItem3": "Try to make a right angle and straight angle."
     }
 }
