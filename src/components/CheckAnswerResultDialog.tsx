@@ -13,6 +13,33 @@ type CheckAnswerResultDialogProps = {
 export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
     const t = useTranslations('CheckAnswerResultDialog');
 
+    const getDialogStyle = (
+        checkAnswerResponse: CheckAnswerResponse,
+        isLoading: boolean, 
+        isError: boolean
+    ) => {
+        if (isLoading || !checkAnswerResponse) {
+            return null;
+        }
+
+        const color = 'common.white';
+        let backgroundColor = '';
+        if (isError) {
+            backgroundColor = 'error.main';
+        } else if (!checkAnswerResponse.isAnswerCorrect) {
+            backgroundColor = 'warning.main';
+        } else {
+            backgroundColor = 'success.main'
+        }
+
+        return {
+            fontSize: 'xx-large',
+            color: color,
+            backgroundColor: backgroundColor,
+            padding: '20px'
+        }
+    };
+
     const getDialogTitle = (
         checkAnswerResponse: CheckAnswerResponse,
         isLoading: boolean, 
@@ -28,11 +55,11 @@ export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
             return t('answerCorrect');
         }
         return t('answerIncorrect');
-    }
+    };
 
     return (
         <Dialog open={props.open} onClose={props.parentCloseHandler}> 
-            <DialogTitle>
+            <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
                 {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
             </DialogTitle>
         </Dialog>
