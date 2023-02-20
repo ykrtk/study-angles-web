@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { CheckAnswerResult, Quiz, ResponseError } from '@/types/quiz'
 import { ImageList, ImageListItem, ImageListItemBar, ListSubheader } from '@mui/material'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import useSWR from 'swr'
 import { AngleQuizImage } from './AngleQuizImage'
 
@@ -11,6 +11,7 @@ const QUIZ_MAIN_IMG_WIDTH = 550;
 const QUIZ_MAIN_IMG_HEIGHT = 424;
 const GALLERY_IMG_WIDTH = 300;
 const GALLERY_IMG_HEIGHT = 231;
+const INITIAL_QUIZ_ID = "1";
 
 type AngleQuizProps = {
   fontFamily: string;
@@ -24,10 +25,6 @@ const fetcher = async (url: string) => {
         throw new Error(data.message);
     }
     return data;
-};
-
-const getQuizIdFromIndex = (index: number) : string => {
-    return (index + 1).toString();
 };
 
 const getImageUrl = (id: string, width: number) : string => {
@@ -49,12 +46,14 @@ function useQuizzes() {
 
 export function AngleQuiz(props: AngleQuizProps) {
     const t = useTranslations('AngleQuiz');
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    // const { query } = useRouter();
-
-    // const { data, error, isLoading, isValidating } = useSWR('/api/quiz/list', fetcher);
-
+    const [selectedQuizId, setSelectedQuizId] = useState(INITIAL_QUIZ_ID);
     const { quizzes, isLoading, isError } = useQuizzes();
+
+    const handleImageListClick = useCallback((e : React.MouseEvent<HTMLElement>, id : string) => {
+        if (id) {
+            setSelectedQuizId(id);
+        }
+    }, []);
 
     if (isLoading) return (<div>{t('loadingData')}</div>);
     if (isError) return (<div>{t('errorLoadingData')}</div>);
@@ -64,29 +63,33 @@ export function AngleQuiz(props: AngleQuizProps) {
             <div className={styles.quizmain}>
                 <h2 className={styles.quizheading}>{t('quizHeading')}</h2>
                 <AngleQuizImage
-                    selectedQuiz={quizzes.find((q: Quiz) => q.id === getQuizIdFromIndex(selectedIndex))}
-                    imageUrl={`${getImageUrl(getQuizIdFromIndex(selectedIndex), QUIZ_MAIN_IMG_WIDTH)}`}
+                    selectedQuiz={quizzes.find((q: Quiz) => q.id === selectedQuizId)}
+                    imageUrl={`${getImageUrl(selectedQuizId, QUIZ_MAIN_IMG_WIDTH)}`}
                     imageWidth={QUIZ_MAIN_IMG_WIDTH}
                     imageHeight={QUIZ_MAIN_IMG_HEIGHT}
                     fontFamily={props.fontFamily}
                 />
             </div>
             <div className={styles.quizgallery}>
-                <ImageList cols={1} 
-                    sx={{ width: GALLERY_IMG_WIDTH + 2, height: GALLERY_IMG_HEIGHT * 3.6, marginBlock: 0 }}>
+                <ImageList cols={1} className={styles.galleryimagelist}
+                    sx={{ width: GALLERY_IMG_WIDTH + 2, height: GALLERY_IMG_HEIGHT * 3.6  }}>
                     <ImageListItem key="SubHeader" cols={1}>
                         <ListSubheader component="div" className={styles.gallerysubheader} sx={{ fontFamily: props.fontFamily }}>
                             {t('gallerySubHeader')}
                         </ListSubheader>
                     </ImageListItem>
                     {quizzes.map((quiz: Quiz) => (
-                        <ImageListItem key={quiz.id}>
+                        <ImageListItem
+                            key={quiz.id}
+                            onClick={(e) => handleImageListClick(e, quiz.id)}
+                        >
                             <Image
                                 src={`${getImageUrl(quiz.id, GALLERY_IMG_WIDTH)}`}
                                 alt={`Image ${quiz.id}`}
                                 width={GALLERY_IMG_WIDTH}
                                 height={GALLERY_IMG_HEIGHT}
                                 loading="lazy"
+                                className={styles.galleryimage}
                             />
                             <ImageListItemBar
                                 title={quiz.id}
