@@ -55,6 +55,7 @@ export function AngleQuizImage(props: AngleQuizImageProps) {
     
     const handleDialogClose = useCallback(() => {
         setIsDialogOpen(false);
+        setCheckAnswerResult(null);
     }, []);
 
     return (
