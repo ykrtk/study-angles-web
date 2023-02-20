@@ -11,6 +11,12 @@
         "radioButtonLabel": "{degree} degrees",
         "checkAnswerButtonLabel": "Check your answer"
     },
+    "CheckAnswerResultDialog": {
+        "loadingData": "Loading data...",
+        "errorLoadingData": "An error occurred while loading data",
+        "answerCorrect": "Your answer is correct!",
+        "answerIncorrect": "Your answer is incorrect"
+    },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"
     },

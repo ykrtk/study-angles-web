@@ -1,14 +1,18 @@
 import styles from '@/styles/AngleQuizImage.module.scss'
-// import * as React from 'react';
+import { useCallback, useRef, useState } from 'react';
+import axios from 'axios'
+import { useTranslations } from 'next-intl';
+import Image from 'next/image'
+
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { useTranslations } from 'next-intl';
-import Image from 'next/image'
-import { Quiz } from '@/types/quiz';
 import { Button } from '@mui/material';
+
+import { CheckAnswerRequest, CheckAnswerResponse, Quiz } from '@/types/quiz';
+import { CheckAnswerResultDialog } from './CheckAnswerResultDialog';
 
 type AngleQuizImageProps = {
     selectedQuiz: Quiz;
@@ -20,6 +24,38 @@ type AngleQuizImageProps = {
 
 export function AngleQuizImage(props: AngleQuizImageProps) {
     const t = useTranslations('AngleQuizImage');
+    const answerRef = useRef(0);
+
+    const [ isDialogOpen, setIsDialogOpen ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ checkAnswerResult, setCheckAnswerResult ] = useState<CheckAnswerResponse | null>(null);
+
+    const checkAnswer = useCallback((id: string) => {
+        setIsLoading(true);
+        const requestBody : CheckAnswerRequest = {
+            id: id,
+            answer: answerRef.current
+        };
+        axios.post(`/api/quiz/check/${id}`, requestBody)
+        .then((response) => {
+            setCheckAnswerResult(response.data as CheckAnswerResponse);
+        });
+        setIsLoading(false);
+    }, []);
+
+    const handleRadioGroupChange = useCallback((e : React.ChangeEvent<HTMLInputElement>, value : string) => {
+        const parsedAnswer = parseInt(value);
+        answerRef.current = parsedAnswer;
+    }, []);
+
+    const handleDialogOpen = useCallback((id: string) => {
+        checkAnswer(id);
+        setIsDialogOpen(true);
+    }, [checkAnswer]);
+    
+    const handleDialogClose = useCallback(() => {
+        setIsDialogOpen(false);
+    }, []);
 
     return (
         <div className={styles.quizimagecontainer}>
@@ -31,7 +67,6 @@ export function AngleQuizImage(props: AngleQuizImageProps) {
                 height={props.imageHeight}
                 loading="lazy"
             />
-
             <FormControl>
                 <FormLabel
                     id="demo-row-radio-buttons-group-label"
@@ -44,6 +79,7 @@ export function AngleQuizImage(props: AngleQuizImageProps) {
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
                     className={styles.radiobuttongroup}
+                    onChange={(e, value) => handleRadioGroupChange(e, value)}
                 >
                     {props.selectedQuiz.choices.map((choice: number) => (
                         <FormControlLabel
@@ -56,10 +92,20 @@ export function AngleQuizImage(props: AngleQuizImageProps) {
                 </RadioGroup>
             </FormControl>
             <div className={styles.checkansbuttoncontainer}>
-                <Button className={styles.checkanswerbutton} variant="contained">
+                <Button
+                    variant="contained"
+                    className={styles.checkanswerbutton}
+                    onClick={(e) => handleDialogOpen(props.selectedQuiz.id)}
+                >
                     {t('checkAnswerButtonLabel')}
-                </Button>                            
+                </Button>
             </div>
+            <CheckAnswerResultDialog
+                open={isDialogOpen}
+                isLoading={isLoading}
+                checkAnswerResponse={checkAnswerResult as CheckAnswerResponse}
+                parentCloseHandler={handleDialogClose}
+            />
         </div>
     );
 }

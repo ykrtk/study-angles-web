@@ -7,9 +7,15 @@
         "quizHeading": "色つきの部分の角度は何度？"
     },
     "AngleQuizImage": {
-        "radioButtonGroupLabel": "答えを選んでみよう",
+        "radioButtonGroupLabel": "答えを下から選ぼう",
         "radioButtonLabel": "{degree} 度",
         "checkAnswerButtonLabel": "答えをチェック"
+    },
+    "CheckAnswerResultDialog": {
+        "loadingData": "データの読み込み中です",
+        "errorLoadingData": "データの読み込み中にエラーが発生しました",
+        "answerCorrect": "正解です！",
+        "answerIncorrect": "残念、不正解です"
     },
     "Footer": {
         "providedBy": "2023 Developed by ykrtk"

@@ -1,11 +1,13 @@
 import styles from '@/styles/AngleQuiz.module.scss'
-import Image from 'next/image'
-import { CheckAnswerResult, Quiz, ResponseError } from '@/types/quiz'
-import { ImageList, ImageListItem, ImageListItemBar, ListSubheader } from '@mui/material'
-import { useTranslations } from 'next-intl'
+
 import { useCallback, useState } from 'react'
 import useSWR from 'swr'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { ImageList, ImageListItem, ImageListItemBar, ListSubheader } from '@mui/material'
+import { Quiz } from '@/types/quiz'
 import { AngleQuizImage } from './AngleQuizImage'
+import { fetcher } from '@/utils/ApiHelpers'
 
 const QUIZ_MAIN_IMG_WIDTH = 550;
 const QUIZ_MAIN_IMG_HEIGHT = 424;
@@ -17,16 +19,6 @@ type AngleQuizProps = {
   fontFamily: string;
 };
 
-const fetcher = async (url: string) => {
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (res.status !== 200) {
-        throw new Error(data.message);
-    }
-    return data;
-};
-
 const getImageUrl = (id: string, width: number) : string => {
     const id_number = parseInt(id); // Make sure id is integer
     const path = `/images/quizimage${id_number.toString().padStart(3, '0')}.png`;
@@ -36,7 +28,6 @@ const getImageUrl = (id: string, width: number) : string => {
 
 function useQuizzes() {
     const { data, error, isLoading, isValidating } = useSWR('/api/quiz/list', fetcher);
-
     return {
       quizzes: data,
       isLoading,
@@ -46,9 +37,9 @@ function useQuizzes() {
 
 export function AngleQuiz(props: AngleQuizProps) {
     const t = useTranslations('AngleQuiz');
-    const [selectedQuizId, setSelectedQuizId] = useState(INITIAL_QUIZ_ID);
+    const [ selectedQuizId, setSelectedQuizId ] = useState(INITIAL_QUIZ_ID);
     const { quizzes, isLoading, isError } = useQuizzes();
-
+    
     const handleImageListClick = useCallback((e : React.MouseEvent<HTMLElement>, id : string) => {
         if (id) {
             setSelectedQuizId(id);
