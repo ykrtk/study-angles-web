@@ -4,11 +4,16 @@ export type Quiz = {
     choices: number[];
 };
 
-export type CheckAnswerResult = {
+export type CheckAnswerRequest = {
     id: string;
-    result: boolean;
+    answer: number;
 };
-  
+
+export type CheckAnswerResponse = {
+    id: string;
+    isAnswerCorrect: boolean;
+};
+
 export type ResponseError = {
     message: string;
 };
