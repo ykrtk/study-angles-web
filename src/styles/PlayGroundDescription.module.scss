@@ -6,6 +6,10 @@
     height: 80px;
     text-align: center;
     margin-top: 0px;
+
+    @include query (mobile) {
+        height: 40px;
+    }
 }
 
 .pgdescheading {

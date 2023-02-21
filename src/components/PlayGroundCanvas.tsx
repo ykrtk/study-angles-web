@@ -7,7 +7,7 @@ import { AngleContext } from './providers/AngleProvider';
 const CANVAS_ELEMENT_ID = 'playGroundCanvas';
 const DEFAULT_CANVAS_WIDTH = 400;
 const DEFAULT_CANVAS_HEIGHT = 400;
-const HEADER_APPROX_MARGIN = 100;
+const HEADER_APPROX_MARGIN = 20;
 const ANGLE_INDICATOR_APPROX_MARGIN = 30;
 
 const CANVAS_CIRCLE_MARGIN = 40;
@@ -234,7 +234,6 @@ export function PlayGroundCanvas() {
         ctx.closePath();
         ctx.fill();
 
-        console.log(`Angle is ${angleInDegreeForUI} degree`);
         setAngle(angleInDegreeForUI);        
     }, [canvasContext, canvasDimension, setAngle])
 
@@ -255,7 +254,6 @@ export function PlayGroundCanvas() {
     }, [handlerCircle, initialized]);
 
     const handleNativeMouseMove = useCallback((e: MouseEvent) => {
-        // console.log('mousemove');
         if (!draggingRef.current) {
             return;
         }
@@ -263,7 +261,6 @@ export function PlayGroundCanvas() {
     }, [drawAngleChange]);
 
     const handleNativeTouchMove = useCallback((e: TouchEvent) => {
-        // console.log('mousemove');
         if (!draggingRef.current) {
             return;
         }
@@ -272,7 +269,6 @@ export function PlayGroundCanvas() {
     }, [drawAngleChange]);
 
     const handleMouseDown = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        // console.log('mousedown');
         startDragging({x: e.clientX, y: e.clientY}, () => {
             // We need to use useRef to keep the reference to the handleNativeMouseMove event handler,
             // because in order to get removeEventListener in handleMouseUp() to work as expected, 
@@ -285,7 +281,6 @@ export function PlayGroundCanvas() {
     }, [handleNativeMouseMove, startDragging])
 
     const handleTouchStart = useCallback((e: React.TouchEvent<HTMLCanvasElement>) => {
-        // // console.log('touchstart');
         const touchList = e.changedTouches[0];
         startDragging({x: touchList.clientX, y: touchList.clientY}, () => {
             handleNativeTouchMoveRef.current = handleNativeTouchMove;
@@ -294,13 +289,11 @@ export function PlayGroundCanvas() {
     }, [handleNativeTouchMove, startDragging])
 
     const handleMouseUp = useCallback((e : React.MouseEvent<HTMLCanvasElement>) => {
-        // console.log('mouseup');
         draggingRef.current = false;
         canvasRef.current?.removeEventListener('mousemove', handleNativeMouseMoveRef.current);
     }, []);
 
     const handleTouchEnd = useCallback((e : React.TouchEvent<HTMLCanvasElement>) => {
-        // console.log('touchup');
         draggingRef.current = false;
         canvasRef.current?.removeEventListener('touchmove', handleNativeTouchMoveRef.current);
     }, []);
