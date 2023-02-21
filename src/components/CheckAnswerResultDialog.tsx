@@ -57,11 +57,31 @@ export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
         return t('answerIncorrect');
     };
 
+    // const getDialog = (checkAnswerResponse: CheckAnswerResponse) => {
+    //     if (checkAnswerResponse) {
+    //         return (
+    //             <Dialog open={props.open} onClose={props.parentCloseHandler}> 
+    //                 <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
+    //                     {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
+    //                 </DialogTitle>
+    //             </Dialog>
+    //         );
+    //     } else {
+    //         return null;
+    //     }
+    // };
+
+    //return getDialog(props.checkAnswerResponse);
+
     return (
-        <Dialog open={props.open} onClose={props.parentCloseHandler}> 
-            <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
-                {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
-            </DialogTitle>
-        </Dialog>
+        <div>
+            {props.checkAnswerResponse ? 
+                <Dialog open={props.open} onClose={props.parentCloseHandler}>
+                    <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
+                        {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
+                    </DialogTitle>
+                </Dialog>
+            : null}            
+        </div>
     );
 }
