@@ -1,11 +1,16 @@
 import styles from '@/styles/PlayGroundAngleIndicator.module.scss'
 import { useTranslations } from 'next-intl'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AngleContext } from './providers/AngleProvider';
 
 export function PlayGroundAngleIndicator() {
   const t = useTranslations('PlayGroundAngleIndicator');
-  const { angle } = useContext(AngleContext);
+  const { angle, setAngle } = useContext(AngleContext);
+
+  useEffect(() => {
+    // Set initial value (=0) when this component mounts
+    setAngle(0);
+  }, [setAngle]);
 
   return (
     <div className={styles.angleindicator}>
