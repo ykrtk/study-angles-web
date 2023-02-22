@@ -1,4 +1,4 @@
-@import "variables.module.scss";
+@import 'variables.module.scss';
 
 .angleindicator {
     display: flex;
@@ -6,7 +6,7 @@
     height: 80px;
     margin-top: 0px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         margin-left: 15px;
         margin-right: 15px;
     }
@@ -19,14 +19,7 @@
     font-size: $custom-font-size-x-large;
     margin: 0 auto 0 auto;
 
-    // font-weight: bold;
-    // white-space: nowrap;
-    // overflow-x: visible;
-    // margin-inline-start: 0;
-    // margin-inline-end: 0;
-    // margin: 0 5px 0 5px;
-
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-large;
     }
 }
@@ -36,10 +29,10 @@
     // .dummyforalign of PlayGroundDescription.module.scss
     // in order to make the baseline of the two headings aligned
     font-size: $custom-font-size-xx-large;
-    vertical-align: baseline; 
+    vertical-align: baseline;
     padding: 0 5px 0 5px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-x-large;
     }
 }

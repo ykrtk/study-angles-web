@@ -1,4 +1,4 @@
-@import "variables.module.scss";
+@import 'variables.module.scss';
 
 .quizimagecontainer {
     display: flex;
@@ -7,7 +7,7 @@
     margin: 0 auto 0 auto;
     padding: 20px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         padding: 0;
     }
 }
@@ -15,7 +15,7 @@
 .quizimage {
     margin: 0 auto 0 auto;
 
-    @include query (mobile) {
+    @include query(mobile) {
         width: 350px;
         height: 270px;
         margin: 0;
@@ -29,7 +29,7 @@
 .radiobuttongroup {
     margin: 5px auto 10px auto;
 
-    @include query (mobile) {
+    @include query(mobile) {
         width: 250px;
     }
 }
@@ -41,7 +41,7 @@
 .checkanswerbutton {
     width: 350px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         width: 250px;
     }
 }

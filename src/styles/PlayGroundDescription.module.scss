@@ -1,4 +1,4 @@
-@import "variables.module.scss";
+@import 'variables.module.scss';
 
 .pgdescheadline {
     display: flex;
@@ -7,7 +7,7 @@
     text-align: center;
     margin-top: 0px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         height: 40px;
     }
 }
@@ -19,7 +19,7 @@
     font-size: $custom-font-size-x-large;
     margin: 0 auto 0 auto;
 
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-large;
     }
 }
@@ -29,10 +29,10 @@
     // .degree of PlayGroundAngleIndicator.module.scss
     // in order to make the baseline of the two headings aligned
     font-size: $custom-font-size-xx-large;
-    vertical-align: baseline; 
+    vertical-align: baseline;
     padding: 0;
 
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-x-large;
     }
 }
@@ -41,7 +41,7 @@
     font-size: $custom-font-size-large;
     margin-left: 50px;
 
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-normal;
     }
 }

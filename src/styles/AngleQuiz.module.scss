@@ -1,4 +1,4 @@
-@import "variables.module.scss";
+@import 'variables.module.scss';
 
 .quizcontainer {
     display: flex;
@@ -8,18 +8,18 @@
     gap: 20px;
     margin-top: 30px;
 
-    @include query (mobile) {
-      flex-direction: column;
+    @include query(mobile) {
+        flex-direction: column;
     }
 }
-  
+
 .quizmain {
     display: block;
     height: 100%;
     width: 100%;
 
-    @include query (mobile) {
-      min-width: 410px;
+    @include query(mobile) {
+        min-width: 410px;
     }
 }
 
@@ -28,8 +28,8 @@
     width: 100%;
     height: 100%;
     margin: 0 auto 0 auto;
-  
-    @include query (mobile) {
+
+    @include query(mobile) {
         flex-direction: column;
         margin: 20px;
     }
@@ -48,7 +48,7 @@
     margin: 0;
     width: inherit;
 
-    @include query (mobile) {
+    @include query(mobile) {
         font-size: $custom-font-size-large;
         text-align: left;
     }
@@ -63,13 +63,13 @@
 
 .galleryimage {
     &:hover {
-      transform: scale(1.2);
-      transition-duration: 0.5s;
+        transform: scale(1.2);
+        transition-duration: 0.5s;
     }
 
     &:active {
-      transform: scale(1.2);
-      transition-duration: 0.5s;
+        transform: scale(1.2);
+        transition-duration: 0.5s;
     }
 }
 

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 export interface AngleContextType {
     angle: number;
@@ -11,18 +11,19 @@ export const AngleContext = createContext<AngleContextType>({
 });
 
 export const AngleProvider = (props: any) => {
-    const {children} = props;
+    const { children } = props;
 
     // Get the default value
     const context: AngleContextType = useContext(AngleContext);
 
     const [angle, setAngle] = useState(context.angle);
-    
+
     // For passing context to sub-components
     const newContext: AngleContextType = {
-        angle, setAngle
+        angle,
+        setAngle,
     };
-    
+
     return (
         <AngleContext.Provider value={newContext}>
             {children}

@@ -12,7 +12,7 @@ export function Navigation() {
         <nav>
             <div className={styles.switchlocale}>
                 <Link href={route} locale={otherLocale}>
-                    {t('switchLocale', {locale: otherLocale})}
+                    {t('switchLocale', { locale: otherLocale })}
                 </Link>
             </div>
         </nav>

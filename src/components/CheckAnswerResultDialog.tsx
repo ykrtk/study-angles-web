@@ -2,12 +2,11 @@ import { useTranslations } from 'next-intl';
 import { Dialog, DialogTitle } from '@mui/material';
 import { CheckAnswerResponse } from '@/types/quiz';
 
-
 type CheckAnswerResultDialogProps = {
     open: boolean;
     isLoading: boolean;
     checkAnswerResponse: CheckAnswerResponse;
-    parentCloseHandler: (() => void);
+    parentCloseHandler: () => void;
 };
 
 export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
@@ -15,7 +14,7 @@ export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
 
     const getDialogStyle = (
         checkAnswerResponse: CheckAnswerResponse,
-        isLoading: boolean, 
+        isLoading: boolean,
         isError: boolean
     ) => {
         if (isLoading || !checkAnswerResponse) {
@@ -29,22 +28,22 @@ export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
         } else if (!checkAnswerResponse.isAnswerCorrect) {
             backgroundColor = 'warning.main';
         } else {
-            backgroundColor = 'success.main'
+            backgroundColor = 'success.main';
         }
 
         return {
             fontSize: 'xx-large',
             color: color,
             backgroundColor: backgroundColor,
-            padding: '20px'
-        }
+            padding: '20px',
+        };
     };
 
     const getDialogTitle = (
         checkAnswerResponse: CheckAnswerResponse,
-        isLoading: boolean, 
+        isLoading: boolean,
         isError: boolean
-    ) : string => {
+    ): string => {
         if (isLoading || !checkAnswerResponse) {
             return t('loadingData');
         }
@@ -57,31 +56,25 @@ export function CheckAnswerResultDialog(props: CheckAnswerResultDialogProps) {
         return t('answerIncorrect');
     };
 
-    // const getDialog = (checkAnswerResponse: CheckAnswerResponse) => {
-    //     if (checkAnswerResponse) {
-    //         return (
-    //             <Dialog open={props.open} onClose={props.parentCloseHandler}> 
-    //                 <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
-    //                     {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
-    //                 </DialogTitle>
-    //             </Dialog>
-    //         );
-    //     } else {
-    //         return null;
-    //     }
-    // };
-
-    //return getDialog(props.checkAnswerResponse);
-
     return (
         <div>
-            {props.checkAnswerResponse ? 
+            {props.checkAnswerResponse ? (
                 <Dialog open={props.open} onClose={props.parentCloseHandler}>
-                    <DialogTitle sx={getDialogStyle(props.checkAnswerResponse, props.isLoading, false)}>
-                        {getDialogTitle(props.checkAnswerResponse, props.isLoading, false)}
+                    <DialogTitle
+                        sx={getDialogStyle(
+                            props.checkAnswerResponse,
+                            props.isLoading,
+                            false
+                        )}
+                    >
+                        {getDialogTitle(
+                            props.checkAnswerResponse,
+                            props.isLoading,
+                            false
+                        )}
                     </DialogTitle>
                 </Dialog>
-            : null}            
+            ) : null}
         </div>
     );
 }
