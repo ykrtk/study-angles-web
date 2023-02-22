@@ -38,7 +38,7 @@
 .playgrounddesc {
     display: flex;
     min-width: 200px;
-    max-width: 600px;
+    max-width: 500px;
     height: 100%;
 
     @include query(mobile) {
