@@ -408,9 +408,7 @@ export function PlayGroundCanvas() {
             startDragging({ x: e.clientX, y: e.clientY }, () => {
                 // We need to use useRef to keep the reference to the handleNativeMouseMove event handler,
                 // because in order to get removeEventListener in handleMouseUp() to work as expected,
-                // we need the idential instance of it which was used for addEventListener
-                // handleNativeMoveRef.current = handleNativeMouseOrTouchMove;
-                // canvasRef.current?.addEventListener('mousemove', handleNativeMoveRef.current);
+                // we need the identical instance of the one that was passed to addEventListener.
                 handleNativeMouseMoveRef.current = handleNativeMouseMove;
                 canvasRef.current?.addEventListener(
                     'mousemove',

@@ -3,20 +3,6 @@
 .playgroundcanvas {
     max-width: 550px;
     margin: 0 auto 0 auto;
-    // height: 100%;
-    // // max-height: 620px;
-    // // max-height: calc(
-    // //     100vh - $page-header-approx-total-height - $tab-menu-approx-total-height -
-    // //         $playground-page-headline-height - $playground-container-top-margin
-    // // );
-    // // max-height: 60vh;
-    // // @media (max-height: 768px) {
-    // //     max-width: 400px;
-    // // }
-
-    // // @media (max-height: 1200px) {
-    // //   max-width: 620px;
-    // // }
 
     @include query(mobile) {
         min-width: 360px;
