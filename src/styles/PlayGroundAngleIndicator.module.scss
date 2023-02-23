@@ -3,7 +3,7 @@
 .angleindicator {
     display: flex;
     align-items: flex-end;
-    height: 80px;
+    height: $playground-page-headline-height;
     margin-top: 0px;
 
     @include query(mobile) {
@@ -16,7 +16,7 @@
     // This font size has to match with
     // .pgdescheading of PlayGroundDescription.module.scss
     // in order to make the baseline of the two headings aligned
-    font-size: $custom-font-size-x-large;
+    font-size: $font-size-for-indicator-desc;
     margin: 0 auto 0 auto;
 
     @include query(mobile) {
@@ -28,7 +28,7 @@
     // This font size has to match with
     // .dummyforalign of PlayGroundDescription.module.scss
     // in order to make the baseline of the two headings aligned
-    font-size: $custom-font-size-xx-large;
+    font-size: $font-size-for-degree-number;
     vertical-align: baseline;
     padding: 0 5px 0 5px;
 

@@ -492,18 +492,20 @@ export function PlayGroundCanvas() {
     }, [canvasDimension, initialized]);
 
     return (
-        <canvas
-            id={CANVAS_ELEMENT_ID}
-            className={styles.canvas}
-            ref={canvasRef}
-            width={canvasDimension?.width ?? DEFAULT_CANVAS_WIDTH}
-            height={canvasDimension?.height ?? DEFAULT_CANVAS_HEIGHT}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-        >
-            {t('canvasNotSupported')}
-        </canvas>
+        <div className={styles.playgroundcanvas}>
+            <canvas
+                id={CANVAS_ELEMENT_ID}
+                className={styles.canvas}
+                ref={canvasRef}
+                width={canvasDimension?.width ?? DEFAULT_CANVAS_WIDTH}
+                height={canvasDimension?.height ?? DEFAULT_CANVAS_HEIGHT}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+            >
+                {t('canvasNotSupported')}
+            </canvas>
+        </div>
     );
 }

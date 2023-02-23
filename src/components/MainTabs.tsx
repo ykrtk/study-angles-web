@@ -112,7 +112,7 @@ export function MainTabs(props: MainTabProps) {
                 </Box>
                 <TabPanel value={value} index={0}>
                     <section className={styles.playgroundcontainer}>
-                        <div className={styles.playgroundcanvas}>
+                        <div className={styles.playgroundfirstcolumn}>
                             <PlayGroundAngleIndicator />
                             <PlayGroundCanvas />
                         </div>

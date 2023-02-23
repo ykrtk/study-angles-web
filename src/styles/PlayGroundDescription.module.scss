@@ -1,9 +1,13 @@
 @import 'variables.module.scss';
 
+.pgdesccontainer {
+    margin: 0 auto 0 auto;
+}
+
 .pgdescheadline {
     display: flex;
     align-items: flex-end;
-    height: 80px;
+    height: $playground-page-headline-height;
     text-align: center;
     margin-top: 0px;
 
@@ -16,7 +20,7 @@
     // This font size has to match with
     // .indicatortext of PlayGroundAngleIndicator.module.scss
     // in order to make the baseline of the two headings aligned
-    font-size: $custom-font-size-x-large;
+    font-size: $font-size-for-indicator-desc;
     margin: 0 auto 0 auto;
 
     @include query(mobile) {
@@ -28,7 +32,7 @@
     // This font size has to match with
     // .degree of PlayGroundAngleIndicator.module.scss
     // in order to make the baseline of the two headings aligned
-    font-size: $custom-font-size-xx-large;
+    font-size: $font-size-for-degree-number;
     vertical-align: baseline;
     padding: 0;
 
@@ -40,6 +44,7 @@
 .instruction {
     font-size: $custom-font-size-large;
     margin-left: 50px;
+    max-width: 500px;
 
     @include query(mobile) {
         font-size: $custom-font-size-normal;
