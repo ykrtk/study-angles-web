@@ -35,6 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.11.18"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-dom", "npm:18.0.10"],\
+            ["@vercel/analytics", "virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:0.1.11"],\
             ["axios", "npm:1.3.3"],\
             ["eslint", "npm:8.33.0"],\
             ["eslint-config-next", "virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:13.1.6"],\
@@ -1102,6 +1103,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/visitor-keys", "npm:5.49.0"],\
             ["@typescript-eslint/types", "npm:5.49.0"],\
             ["eslint-visitor-keys", "npm:3.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@vercel/analytics", [\
+        ["npm:0.1.11", {\
+          "packageLocation": "./.yarn/cache/@vercel-analytics-npm-0.1.11-9aba632258-05b8180ac6.zip/node_modules/@vercel/analytics/",\
+          "packageDependencies": [\
+            ["@vercel/analytics", "npm:0.1.11"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:0.1.11", {\
+          "packageLocation": "./.yarn/__virtual__/@vercel-analytics-virtual-e5071600b4/0/cache/@vercel-analytics-npm-0.1.11-9aba632258-05b8180ac6.zip/node_modules/@vercel/analytics/",\
+          "packageDependencies": [\
+            ["@vercel/analytics", "virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:0.1.11"],\
+            ["@types/react", "npm:18.0.27"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4813,6 +4836,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.11.18"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-dom", "npm:18.0.10"],\
+            ["@vercel/analytics", "virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:0.1.11"],\
             ["axios", "npm:1.3.3"],\
             ["eslint", "npm:8.33.0"],\
             ["eslint-config-next", "virtual:4518b1b93dc7be9f64506c4c2701ce7f87925588762835fafc5c79070aca23573c3133adadeb4ae5d0d2ad311aff6ffada0058fdfd8e6620613a687c2eff95ef#npm:13.1.6"],\
